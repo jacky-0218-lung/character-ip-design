@@ -4,6 +4,13 @@ Read this before drawing the hero (Step 9). Subtraction decides WHAT the charact
 decides whether anyone wants to hug it. The two never trade against each other: appeal items
 are small, bounded, and always quieter than the super symbol.
 
+## 目錄（Contents）
+
+- Baby-schema dials（嬰兒圖式：可量化的可愛）
+- The appeal pass（魅力檢核：色彩下限／統計檢查／細節預算／反差／性格卡）
+- Register dial（萌度／成熟度）
+- Anti-slop checklist（最後過一次）
+
 ## Baby-schema dials（嬰兒圖式：可量化的可愛）
 
 Empirically validated levers (Kindchenschema, Glocker et al.; kawaii research):

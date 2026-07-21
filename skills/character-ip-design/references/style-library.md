@@ -6,6 +6,14 @@ elements are *drawn*. The default trap is「萬物皆軟糖」: rendering every 
 flat-kawaii look. Style must be chosen consciously (the style triptych step), locked before
 the hero, and recorded in the design sheet as a 風格規格 (style spec).
 
+## 目錄（Contents）
+
+- Choosing（如何選風格）
+- 11 條風格條目：1 軟糖圓潤 · 2 盲盒潮玩 · 3 幾何極簡 · 4 復古橡膠管 · 5 像素 · 6 蠟筆手繪 ·
+  7 繪本風 · 8 緩角色 Yuru-chara · 9 昭和レトロ · 10 貼紙塗鴉 · 11 電競狂野
+- Style research protocol（用戶點名庫外風格時）
+- Style × methodology interactions
+
 ## Choosing
 
 - User named a style or reference → use the matching entry below; if not covered (or covered

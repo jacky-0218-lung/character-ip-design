@@ -2,6 +2,14 @@
 
 Read this before committing to an amplification axis (Step 6) or when a draft feels weak.
 
+## 目錄（Contents）
+
+- What "amplification" actually means（放大的四種技法）
+- Case analyses by axis（五官／形態／色彩三軸案例）
+- Choosing when applications conflict（應用衝突時如何取捨）
+- Shape language quick reference（形狀語言速查）
+- Warning signs the symbol is too weak（符號太弱的警訊）
+
 ## What "amplification" actually means
 
 Amplification = pushing one local feature far past natural proportion, until it becomes the

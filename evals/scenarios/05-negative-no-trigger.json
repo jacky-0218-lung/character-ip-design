@@ -1,0 +1,12 @@
+{
+  "name": "negative-unrelated-request",
+  "query": "幫我修這個 Python 腳本裡的 bug,它讀 CSV 時會 crash",
+  "should_trigger": false,
+  "skills": [],
+  "expected_behavior": [
+    "不觸發 character-ip-design(與角色/IP/吉祥物設計無關)",
+    "直接處理除錯請求,不呈現角色設計 intake 表單",
+    "不把對話導向市場調查或超級符號流程"
+  ],
+  "notes": "負向情境:確認 description 不會過度觸發(避免 false positive)。"
+}

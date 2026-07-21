@@ -1,0 +1,14 @@
+{
+  "name": "full-ip-brief",
+  "query": "我想從零打造一個原創 IP,之後要做貼圖、週邊到授權,先幫我做市場調查與世界觀",
+  "should_trigger": true,
+  "skills": ["character-ip-design"],
+  "expected_behavior": [
+    "辨識為 full IP brief:跑完整三階段(研究與策略 → 設計 → 商業化)",
+    "產出市場分析報告,含競品 IP 佔位表與一句話『空白定位』,數字附可點連結來源",
+    "決定敘事教義(Sanrio 極簡投射 vs San-X 微敘事)並寫 1 頁世界觀與角色深度設定",
+    "設計相位以空白定位為 brief:三概念方向 → 三風格三聯圖 → 超級符號 → 三驗證",
+    "商業化含 rollout roadmap(各階附 gate 條件)、KPI、內容支柱、商標/文化檢核與非法律意見聲明"
+  ],
+  "notes": "檢查 white-space statement 是否貫穿到設計相位,以及商業化的誠實性規則。"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "named-style-triptych",
+  "query": "我想要一個水墨風的品牌角色",
+  "should_trigger": true,
+  "skills": ["character-ip-design"],
+  "expected_behavior": [
+    "先做 intake,再進設計流程",
+    "在風格三聯圖中提供橫跨真正不同 register 的三種風格(而非三種同質變體)給使用者挑",
+    "使用者點名水墨→採用 style-library 的『13 水墨 東方水墨風』條目(毛筆起收/濃淡墨階/留白),鎖定後不再風格漂移",
+    "確認超級符號能存活於該風格——水墨線條會抖,符號需活在剪影而非線條裡",
+    "把風格規格(含 SVG 執行要訣)寫進設計書後才畫 hero"
+  ],
+  "notes": "驗證新加入的水墨條目與『符號需存活於風格』的交互規則。"
+}

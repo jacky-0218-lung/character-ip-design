@@ -47,9 +47,16 @@ jobs:
           title="docs: 每週維護自動 PR（${BRANCH}）"
           body=$(printf '本 PR 由 `auto-open-weekly-pr` workflow 於分支 `%s` push 後自動建立——雲端沙箱無法直接呼叫 GitHub PR API,改由 GitHub Actions 在 GitHub 端開啟。\n\n## 本週變更（取自 CHANGELOG [Unreleased]）\n\n%s\n\n---\n以本 PR 的 CI(unittest + check_repository.py)為驗收依據。' "${BRANCH}" "${section}")
 
-          gh api "repos/${REPO}/pulls" \
-            -f title="${title}" \
-            -f head="${BRANCH}" \
-            -f base="main" \
-            -f body="${body}" \
-            --jq '.html_url'
+          if ! out=$(gh api "repos/${REPO}/pulls" \
+              -f title="${title}" \
+              -f head="${BRANCH}" \
+              -f base="main" \
+              -f body="${body}" \
+              --jq '.html_url' 2>&1); then
+            echo "${out}"
+            if printf '%s' "${out}" | grep -qi "not permitted to create"; then
+              echo "::error::GitHub Actions 目前不被允許開 PR。請到 Settings → Actions → General → Workflow permissions,勾選『Allow GitHub Actions to create and approve pull requests』,再對本次 run 按 Re-run jobs。"
+            fi
+            exit 1
+          fi
+          echo "PR opened: ${out}"

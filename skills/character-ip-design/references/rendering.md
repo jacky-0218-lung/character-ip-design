@@ -19,6 +19,14 @@ Keep the identity master filter-free; premium files carry the filters.
 Pick the finish level at intake (完成度 question). Record the chosen lane and its parameters
 as a 渲染規格 block inside the design sheet's 風格規格 section.
 
+## 目錄（Contents）
+
+- Lane 1 — 賽璐璐 Cel-shade（anime-grade vector）
+- Lane 2 — 3D 潮玩渲染 Faux-3D toy render
+- Lane 3 — AI 生圖 Prompt package（外部工具的精緻筆觸稿）
+- Lane 4 — 質感印刷 Print textures（水彩／riso／紙紋）
+- Choosing a lane
+
 ## Lane 1 — 賽璐璐 Cel-shade（anime-grade vector）
 
 The workhorse premium look; pure SVG, huge fidelity jump.
@@ -79,21 +87,36 @@ external tools. Structure — all five parts:
    it as the reference image for everything else.
 3. **Scene templates**: 3–5 prompts with [SLOT]s for situation/pose/mood, each restating the
    symbol.
-4. **Per-tool parameter blocks**:
-   - Midjourney: `--oref <turnaround URL>` (one image) + `--ow` (default 100, keep <400),
-     `--sref` for style, fixed seed; restate style at prompt start AND end; note oref is
-     incompatible with Fast/Draft modes.
-   - Gemini/Nano-banana-class: attach up to ~14 reference images; phrase as "Using the
-     attached sheet as [character], keep the [symbol] exactly the same, now show them …".
-   - SD/Flux: LoRA route (10–20 images: front/side/back × full/portrait/close, caption
-     everything EXCEPT the character — the trigger word is the thing you don't caption) or
-     reference-adapter route (IPAdapter/InstantID-class) when there's no training budget.
-   - Negative prompts: "off-model, inconsistent colors, different character, extra limbs,
-     realistic" (adjust per style).
+4. **Per-tool parameter blocks** (model families current as of 2026-07; the *principles*
+   above outlive any specific version — treat exact names and flags as swappable, and pick by
+   the job, not the brand):
+   - **Gemini「Nano Banana」/ Nano Banana Pro (Google)**: the current character-consistency and
+     editing leader — built around identity preservation and "change only this one thing"
+     edits, native output up to ~4K. Attach the turnaround sheet + up to ~14 reference images;
+     phrase as "Using the attached sheet as [character], keep the [symbol] exactly the same,
+     now show them …". Best default when the job is keeping ONE character on-model across many
+     scenes.
+   - **GPT Image (OpenAI, gpt-image / GPT Image 2 line)**: strongest prompt adherence and
+     in-image text rendering; conversational refinement (describe the change, no flag syntax).
+     Good for scene templates with signage/labels; feed the turnaround as a reference image and
+     restate the symbol each turn.
+   - **Midjourney (V7/V8 line)**: `--cref`/`--oref <turnaround URL>` for character reference +
+     `--ow` (default 100, keep < 400), `--sref` for style, fixed seed; restate style at prompt
+     start AND end; note character-ref has mode limits (e.g. Fast/Draft). Best aesthetic taste
+     for stylized key art.
+   - **FLUX.2 / FLUX Kontext (Black Forest Labs) & open-weight (Qwen-Image, SDXL)**:
+     photorealism plus context-aware "edit this region, keep the rest" (Kontext); API-first.
+     For a locked custom character, LoRA route (10–20 images: front/side/back ×
+     full/portrait/close, caption everything EXCEPT the character — the trigger word is the
+     thing you don't caption); or a reference-adapter route (IPAdapter/InstantID-class) when
+     there's no training budget.
+   - **Negative prompts** (where the tool supports them): "off-model, inconsistent colors,
+     different character, extra limbs, realistic" (adjust per style).
 5. **On-model drift checklist**: silhouette matches? part-anchored hexes right? symbol
    present and unmodified? proportions (head count) right? — with the honest warning that
-   fine symbol details are exactly what current models drift on; every generation gets
-   checked against the flat master.
+   fine symbol details are exactly what current models drift on. Identity-preservation models
+   (Nano Banana-class) have narrowed but not closed this gap; the fine symbol detail is still
+   where drift hides, so every generation gets checked against the flat master.
 
 ## Lane 4 — 質感印刷 Print textures（水彩／riso／紙紋）
 

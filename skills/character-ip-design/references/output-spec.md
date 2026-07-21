@@ -1,5 +1,13 @@
 # Output Spec（SVG 規範與 IP 設計書結構）
 
+## 目錄（Contents）
+
+- SVG conventions（SVG 規範）
+- File set to deliver（交付檔案清單）
+- Master + Export（母檔與輸出格式）
+- IP design sheet structure（設計書／IP bible 結構）
+- Delivery（交付方式）
+
 ## SVG conventions
 
 Consistency here is what makes the character redrawable and the tests executable. **These are

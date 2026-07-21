@@ -1,0 +1,15 @@
+name: Feature request
+description: Suggest an improvement to the pipeline, style library, or rendering lanes
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+      description: What should the skill do that it doesn't yet?
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Why it matters

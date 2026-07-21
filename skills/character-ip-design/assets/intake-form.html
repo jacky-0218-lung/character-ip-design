@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>角色 IP 開發 — 需求表單 / Character IP Intake</title>
+<style>
+  :root{
+    --bg:#F6F1E8; --card:#fff; --ink:#2b2620; --muted:#7a7266;
+    --line:#e4dccb; --accent:#C7794A; --accent2:#5B7C8A; --ok:#3f7d5a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Noto Sans TC","PingFang TC",system-ui,-apple-system,"Segoe UI",sans-serif;
+       background:var(--bg);color:var(--ink);line-height:1.6;padding:32px 16px}
+  .wrap{max-width:760px;margin:0 auto}
+  h1{font-size:1.55rem;margin:0 0 4px}
+  .sub{color:var(--muted);margin:0 0 24px;font-size:.95rem}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:0 0 16px;
+        box-shadow:0 1px 0 rgba(0,0,0,.02)}
+  .q{font-weight:700;margin:0 0 4px}
+  .hint{color:var(--muted);font-size:.85rem;margin:0 0 12px}
+  label.opt{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border:1px solid var(--line);
+        border-radius:10px;margin:6px 0;cursor:pointer;transition:.15s}
+  label.opt:hover{border-color:var(--accent);background:#fdf8f2}
+  label.opt input{margin-top:4px}
+  .optlabel b{display:block}
+  .optlabel span{color:var(--muted);font-size:.85rem}
+  input[type=text],textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+        font:inherit;color:inherit;background:#fffdf9}
+  textarea{min-height:64px;resize:vertical}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row .card-mini{flex:1;min-width:150px}
+  .actions{position:sticky;bottom:0;background:linear-gradient(transparent,var(--bg) 30%);padding-top:16px}
+  button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:12px 20px;cursor:pointer}
+  #gen{background:var(--accent);color:#fff}
+  #copy{background:var(--accent2);color:#fff}
+  .out{white-space:pre-wrap;background:#20242b;color:#e7edf2;border-radius:12px;padding:16px;font-family:
+       ui-monospace,"SF Mono",Menlo,monospace;font-size:.82rem;margin-top:12px;display:none}
+  .pill{display:inline-block;background:#efe7d7;border-radius:999px;padding:2px 10px;font-size:.78rem;color:var(--muted);margin-left:6px}
+  footer{color:var(--muted);font-size:.8rem;text-align:center;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>角色 IP 開發 — 需求表單</h1>
+  <p class="sub">填完後按「產生需求摘要」，把摘要複製貼回對話，Claude 就會照 character-ip-design skill 的完整流程往下走。<br>
+  Fill this in, generate the brief, paste it back to Claude — the skill runs from there.</p>
+
+  <div class="card">
+    <p class="q">1. 品牌／產品一句話，以及規模 <span class="pill">scope</span></p>
+    <p class="hint">你在做什麼？這決定要走「快速吉祥物」還是「完整 IP 經營」。</p>
+    <input type="text" id="brand" placeholder="例：台北自家烘焙咖啡店，主打日式手沖與安靜氛圍">
+    <label class="opt"><input type="radio" name="scope" value="單一吉祥物（快速）"><span class="optlabel"><b>單一吉祥物（快速）</b><span>指定用途的一隻角色，幾分鐘一份設計書</span></span></label>
+    <label class="opt"><input type="radio" name="scope" value="完整 IP 經營（全流程）"><span class="optlabel"><b>完整 IP 經營（全流程）</b><span>市場調查→世界觀→設計→商業化 roadmap 全套</span></span></label>
+  </div>
+
+  <div class="card">
+    <p class="q">2. 受眾</p>
+    <p class="hint">誰一定要愛上這個角色？</p>
+    <input type="text" id="audience" placeholder="例：25–40 歲上班族／學齡兒童／潮玩收藏者">
+  </div>
+
+  <div class="card">
+    <p class="q">3. 個性三關鍵詞</p>
+    <p class="hint">用三個詞形容角色個性。</p>
+    <input type="text" id="traits" placeholder="例：沉靜、溫柔、可靠">
+  </div>
+
+  <div class="card">
+    <p class="q">4. 應用階梯</p>
+    <p class="hint">首要用在哪？（可多選，第一個最重要）長期想走到哪？</p>
+    <div id="apps">
+      <label class="opt"><input type="checkbox" value="LINE 貼圖／聊天"><span class="optlabel"><b>LINE 貼圖／聊天</b></span></label>
+      <label class="opt"><input type="checkbox" value="App／社群 icon"><span class="optlabel"><b>App／社群 icon</b></span></label>
+      <label class="opt"><input type="checkbox" value="週邊／市集"><span class="optlabel"><b>週邊／市集</b></span></label>
+      <label class="opt"><input type="checkbox" value="立牌／官網主視覺"><span class="optlabel"><b>立牌／官網主視覺</b></span></label>
+      <label class="opt"><input type="checkbox" value="盲盒／潮玩"><span class="optlabel"><b>盲盒／潮玩</b></span></label>
+      <label class="opt"><input type="checkbox" value="品牌授權／聯名"><span class="optlabel"><b>品牌授權／聯名</b></span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="q">5. 風格方向</p>
+    <p class="hint">想要哪種畫風？不確定可留白讓 Claude 給你三種挑；點名任何 IP／年代／畫風都行，會去研究。</p>
+    <input type="text" id="style" placeholder="例：軟糖圓潤／盲盒潮玩／像素風／1930 橡膠管／蠟筆手繪／昭和復古…或「像 Ghibli 那種」">
+    <input type="text" id="styledislike" placeholder="不想要的風格（選填）" style="margin-top:8px">
+  </div>
+
+  <div class="card">
+    <p class="q">6. 萌度 ↔ 成熟度</p>
+    <div>
+      <label class="opt"><input type="radio" name="reg" value="幼齡可愛"><span class="optlabel"><b>幼齡可愛</b><span>大眼、腮紅、粗輪廓</span></span></label>
+      <label class="opt"><input type="radio" name="reg" value="溫暖日常"><span class="optlabel"><b>溫暖日常</b><span>柔和、放鬆、偏成熟</span></span></label>
+      <label class="opt"><input type="radio" name="reg" value="冷面成熟 deadpan"><span class="optlabel"><b>冷面成熟 deadpan</b><span>面癱、精品、工程師友善</span></span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="q">7. 既有品牌資產</p>
+    <p class="hint">已有的顏色、logo 形狀、既有受眾等（沒有就留白）。</p>
+    <input type="text" id="assets" placeholder="例：品牌色霧藍 #A8BEC4；logo 是山形；已有 IG 3k 粉">
+  </div>
+
+  <div class="card">
+    <p class="q">8. 命名</p>
+    <input type="text" id="name" placeholder="已有名字就填；想要 Claude 提案就寫「請提案」">
+  </div>
+
+  <div class="card">
+    <p class="q">9. 完成度 <span class="pill">finish</span></p>
+    <div>
+      <label class="opt"><input type="radio" name="finish" value="平面識別系統即可"><span class="optlabel"><b>平面識別系統即可</b><span>角色＋貼圖＋設計書</span></span></label>
+      <label class="opt"><input type="radio" name="finish" value="加精緻主視覺（賽璐璐／3D 潮玩／質感印刷）"><span class="optlabel"><b>加精緻主視覺</b><span>賽璐璐立繪／3D 潮玩渲染／質感印刷</span></span></label>
+      <label class="opt"><input type="radio" name="finish" value="加 AI 生圖 prompt 套件"><span class="optlabel"><b>加 AI 生圖 prompt 套件</b><span>給團隊用 Midjourney／SD 維持角色一致性</span></span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="q">10. 其他想補充的（選填）</p>
+    <textarea id="notes" placeholder="任何額外的想法、參照、限制、死線…"></textarea>
+  </div>
+
+  <div class="actions">
+    <button id="gen">產生需求摘要 ▸</button>
+    <button id="copy" style="display:none">複製</button>
+    <div class="out" id="out"></div>
+  </div>
+
+  <footer>character-ip-design skill · 本表單在瀏覽器本機執行，不上傳任何資料</footer>
+</div>
+
+<script>
+(function(){
+  function val(id){var el=document.getElementById(id);return el?el.value.trim():"";}
+  function radio(n){var el=document.querySelector('input[name="'+n+'"]:checked');return el?el.value:"";}
+  function checks(id){return Array.prototype.slice.call(document.querySelectorAll('#'+id+' input:checked')).map(function(e){return e.value;});}
+
+  function build(){
+    var apps=checks('apps');
+    var lines=[];
+    lines.push("=== 角色 IP 需求摘要 / IP Intake Brief ===");
+    lines.push("1. 品牌/產品: "+(val('brand')||"（未填）"));
+    lines.push("   規模 scope: "+(radio('scope')||"（未選 → 請 Claude 依內容判斷）"));
+    lines.push("2. 受眾: "+(val('audience')||"（未填）"));
+    lines.push("3. 個性三關鍵詞: "+(val('traits')||"（未填 → 請提案）"));
+    lines.push("4. 應用階梯(首要在前): "+(apps.length?apps.join(" > "):"（未選）"));
+    lines.push("5. 風格方向: "+(val('style')||"（未指定 → 請給三風格三聯圖讓我挑）"));
+    if(val('styledislike')) lines.push("   不想要的風格: "+val('styledislike'));
+    lines.push("6. 萌度/成熟度: "+(radio('reg')||"（未選）"));
+    lines.push("7. 既有品牌資產: "+(val('assets')||"無"));
+    lines.push("8. 命名: "+(val('name')||"請提案"));
+    lines.push("9. 完成度: "+(radio('finish')||"平面識別系統即可"));
+    if(val('notes')) lines.push("10. 補充: "+val('notes'));
+    lines.push("");
+    lines.push("→ 請依 character-ip-design skill 的流程進行；缺的欄位用合理假設並在開頭標明。");
+    return lines.join("\n");
+  }
+
+  var out=document.getElementById('out'), copyBtn=document.getElementById('copy');
+  document.getElementById('gen').addEventListener('click',function(){
+    out.textContent=build(); out.style.display='block'; copyBtn.style.display='inline-block';
+    out.scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+  copyBtn.addEventListener('click',function(){
+    var t=out.textContent;
+    function done(){copyBtn.textContent='已複製 ✓';setTimeout(function(){copyBtn.textContent='複製';},1500);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,fallback);}else{fallback();}
+    function fallback(){var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);}
+  });
+})();
+</script>
+</body>
+</html>

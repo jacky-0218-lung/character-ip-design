@@ -26,6 +26,15 @@ character business ~¥2.85T (Yano Research); China licensed merch ~RMB 155B (Chi
 Expo white paper); LINE Creators Market has shown solo creators can reach ¥100M+ (LINE PR).
 Pick the numbers relevant to the user's market and goals.
 
+近期潮玩／盲盒動能可作 category 佐證(2024–2025，仍請以最新數據覆核):中國潮玩收藏市場預估
+2026 年約 RMB 110B（US$15.3B）、年增約 20%；POP MART 估值一度達 ~US$40B、年營收約 US$1.8B，
+其中**絨毛品類 2024 年 YoY +1,289%**（見
+[China Briefing](https://www.china-briefing.com/news/decoding-labubu-phenomenon-china-collectible-toys-market/)）——
+絨毛暴增正好佐證本 pipeline 把「絨毛/盲盒」排在小物之後的 rollout 順序。但同期也出現約 43% 消費者
+「設計疲勞」與盲盒對未成年人的監管訊號（[China Briefing](https://www.china-briefing.com/news/decoding-labubu-phenomenon-china-collectible-toys-market/)、
+[Stormy AI](https://stormy.ai/blog/popmart-labubu-consumer-psychology-2026)）——提醒 IP 靠角色深度
+與世界觀續命，而非只靠稀缺噱頭。這些是會過時的錨點：引用前務必搜尋覆核最新值。
+
 ### 2. Competitor IP landscape & motif occupancy（3–5 searches）
 
 The core artifact: a table of the 6–12 IPs the target audience already loves in this

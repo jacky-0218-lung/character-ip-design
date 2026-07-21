@@ -9,8 +9,9 @@ the hero, and recorded in the design sheet as a 風格規格 (style spec).
 ## 目錄（Contents）
 
 - Choosing（如何選風格）
-- 11 條風格條目：1 軟糖圓潤 · 2 盲盒潮玩 · 3 幾何極簡 · 4 復古橡膠管 · 5 像素 · 6 蠟筆手繪 ·
-  7 繪本風 · 8 緩角色 Yuru-chara · 9 昭和レトロ · 10 貼紙塗鴉 · 11 電競狂野
+- 13 條風格條目：1 軟糖圓潤 · 2 盲盒潮玩 · 3 幾何極簡 · 4 復古橡膠管 · 5 像素 · 6 蠟筆手繪 ·
+  7 繪本風 · 8 緩角色 Yuru-chara · 9 昭和レトロ · 10 貼紙塗鴉 · 11 電競狂野 · 12 Y2K 千禧未來感 ·
+  13 水墨 東方水墨風
 - Style research protocol（用戶點名庫外風格時）
 - Style × methodology interactions
 
@@ -172,12 +173,43 @@ the hero, and recorded in the design sheet as a 風格規格 (style spec).
 - Right for: teams, gaming gear, events. Wrong for: 溫暖日常品牌
 - 常見翻車: gradients + many colors (dies on jerseys/32 px); timid static front pose
 
+## 12. Y2K 千禧未來感
+
+- 氣質: 亮面、未來、2000 年代科技懷舊、玩心
+- 視覺語法: chrome／液態水銀金屬反光、holographic 全像漸層、泡泡 3D 圓潤字體、四尖星芒
+  sparkle、bevel＋glow;冷調未來色盤(電光藍／電紫／亮粉／銀灰)＋高對比漸層;像素／CRT／
+  載入條等復古介面殘影當點綴
+- SVG 執行要訣: 金屬反光用 `linearGradient`/`radialGradient`(亮帶＋暗邊＋一條白 specular);
+  星芒用 4 尖 path;bevel＝一條淺色內描邊＋一條深色外描邊;glow 需 filter(`feGaussianBlur`)→
+  走 Chromium 光柵化。**金屬/glow 屬 rendering.md 的『完成度』層,只上在 presentation surface;
+  identity master 仍保 flat**(見 rendering.md finish ladder)
+- 語感參照: 初代 iMac／MSN／Lisa Frank × 科技的視覺;千禧潮流品牌
+- Right for: 潮流／美妝／音樂／Z 世代社群、復古未來企劃. Wrong for: 要在 16px favicon 或單色
+  印刷維持辨識的 identity(漸層／glow 會死)
+- 常見翻車: 整張都是漸層 glow 把 super symbol 淹沒;時效性梗塞太滿;忘了 identity master 要
+  另存 flat 版
+
+## 13. 水墨 東方水墨風（shui-mo）
+
+- 氣質: 東方、留白、詩意、氣韻
+- 視覺語法: 毛筆線條有起筆／收筆與粗細變化(釘頭鼠尾／行雲流水),**非均勻描邊**;以濃淡墨階
+  (焦／濃／重／淡／清)取代平塗與陰影;大量留白 negative space 本身即構圖;皴法點染做質感;可
+  一點朱砂印章色當暖點綴
+- SVG 執行要訣: 線條用**可變寬度的 path**(非 uniform stroke)、端點做尖收;墨階用多層半透明
+  黑填色堆疊(20–50% 疊加);飛白／濕邊用 `feTurbulence`＋`feDisplacementMap`(走 Chromium
+  光柵化);背景保留紙白,勿填滿
+- 語感參照: 齊白石的蝦、《牧笛》/《山水情》水墨動畫(上海美術電影)、sumi-e
+- Right for: 文創／茶飲／文化品牌／展覽、高端東方定位. Wrong for: 要硬邊向量重製於貼圖／
+  favicon／刺繡的 identity —— 此時符號要活在**剪影**而非毛筆線條裡
+- 常見翻車: 用均勻描邊假裝毛筆(失去起收與粗細);把留白填滿;墨色只有單一濃度沒有濃淡階;
+  忘了符號仍要通過剪影測試
+
 ---
 
 ## Style research protocol（用戶點名庫外風格時）
 
 When the user names a style, era, artist-genre, or reference IP this library doesn't cover
-well ("水墨風", "Y2K", "像 Ghibli 那種", "我們美術館的版畫感"):
+well ("浮世繪", "vaporwave 蒸氣波", "像 Ghibli 那種", "我們美術館的版畫感"):
 
 1. **Research before drawing.** If web tools are available, run 3–6 searches on the style's
    *conventions* (line art, palette, proportions/anatomy, plus one search for its classic

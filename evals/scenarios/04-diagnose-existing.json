@@ -1,0 +1,14 @@
+{
+  "name": "diagnose-unmemorable-character",
+  "query": "我現在的角色不夠好記,幫我看看問題出在哪、怎麼變好記",
+  "should_trigger": true,
+  "skills": ["character-ip-design"],
+  "expected_behavior": [
+    "觸發本 skill 的診斷路徑(不必從零重畫)",
+    "用剪影測試檢查:去掉顏色只剩黑影時是否還認得出、超級符號是否清晰",
+    "檢查是否有兩個特徵在搶第一眼(twin symbols),並用減法去掉與身分競爭的元素",
+    "選一條放大軸把單一特徵放大到 1.5–2×(或缺席/重複/幾何化),而非再加裝飾",
+    "出示修改前後對照作為證據"
+  ],
+  "notes": "驗證『診斷既有角色/簡化過度裝飾』這條觸發路徑與 super-symbol 警訊清單。"
+}

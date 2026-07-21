@@ -16,6 +16,11 @@ All notable changes to this project are documented here. Format follows
   the fine-symbol-detail gap.
 
 ### Added
+- `.github/workflows/auto-open-weekly-pr.yml` — a guard-compliant workflow that auto-opens a
+  PR when a `weekly-improve-*` branch is pushed. It runs on GitHub's infrastructure (using the
+  built-in `GITHUB_TOKEN`), so the weekly maintenance task can open PRs even when its cloud
+  sandbox cannot reach the GitHub API directly. Top-level permissions stay read-only; the job
+  grants only `pull-requests: write`; no third-party actions are used.
 - Added a 目錄（Contents）table of contents to the five reference files over 100 lines
   (`rendering.md`, `style-library.md`, `output-spec.md`, `appeal.md`, `super-symbol.md`),
   following Anthropic's skill best practice of giving longer reference files a table of

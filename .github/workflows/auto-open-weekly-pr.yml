@@ -1,0 +1,55 @@
+name: Auto-open weekly PR
+
+# 當每週維護任務把 weekly-improve-* 分支 push 上來時,由 GitHub Actions(跑在 GitHub 端,
+# 不經過雲端沙箱的 api.github.com 代理)用內建 GITHUB_TOKEN 自動開 PR。
+# 沙箱環境無法直接呼叫 GitHub PR API,故把開 PR 這一步搬到 Actions runner 完成。
+
+on:
+  push:
+    branches:
+      - 'weekly-improve-*'
+
+# 頂層維持唯讀(符合 tools/check_repository.py 的 workflow 安全守則);
+# 開 PR 所需的寫入權限只在下方 job 層以最小範圍授予。
+permissions:
+  contents: read
+
+jobs:
+  open-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Open a PR for the pushed weekly-improve branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          owner="${REPO%/*}"
+
+          # 已有同分支的 open PR 就不重複開
+          existing=$(gh api "repos/${REPO}/pulls?state=open&head=${owner}:${BRANCH}" --jq 'length')
+          if [ "${existing}" != "0" ]; then
+            echo "已存在 ${BRANCH} 的 open PR,無需重開。"
+            exit 0
+          fi
+
+          # PR 內文取自 CHANGELOG 的 [Unreleased] 段落;取不到就用通用說明
+          raw=$(gh api "repos/${REPO}/contents/CHANGELOG.md?ref=${BRANCH}" --jq '.content' 2>/dev/null | base64 -d 2>/dev/null || true)
+          section=$(printf '%s\n' "${raw}" | awk '/^## \[Unreleased\]/{f=1;next} /^## \[/{if(f)exit} f')
+          if [ -z "$(printf '%s' "${section}" | tr -d '[:space:]')" ]; then
+            section="變更內容請見本分支的 commit 與 CHANGELOG。"
+          fi
+
+          title="docs: 每週維護自動 PR（${BRANCH}）"
+          body=$(printf '本 PR 由 `auto-open-weekly-pr` workflow 於分支 `%s` push 後自動建立——雲端沙箱無法直接呼叫 GitHub PR API,改由 GitHub Actions 在 GitHub 端開啟。\n\n## 本週變更（取自 CHANGELOG [Unreleased]）\n\n%s\n\n---\n以本 PR 的 CI(unittest + check_repository.py)為驗收依據。' "${BRANCH}" "${section}")
+
+          gh api "repos/${REPO}/pulls" \
+            -f title="${title}" \
+            -f head="${BRANCH}" \
+            -f base="main" \
+            -f body="${body}" \
+            --jq '.html_url'

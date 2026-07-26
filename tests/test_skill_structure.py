@@ -21,6 +21,7 @@ EXPECTED_REFERENCES = {
     "verification-tests.md",
     "output-spec.md",
     "commercialization.md",
+    "ip-protection.md",
 }
 
 

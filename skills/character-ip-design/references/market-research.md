@@ -21,19 +21,43 @@ decides the white space the design will occupy.
 ### 1. Category & market sizing（1–2 searches）
 
 One paragraph of context with real numbers when available. Useful anchors (verify/update by
-search; cite what you use): global licensed merch ~$390B (Licensing International); Japan
-character business ~¥2.85T (Yano Research); China licensed merch ~RMB 155B (China Licensing
-Expo white paper); LINE Creators Market has shown solo creators can reach ¥100M+ (LINE PR).
-Pick the numbers relevant to the user's market and goals.
+search; cite what you use). **These go stale fast — every number below is a starting point for
+a search, not a citation you may paste unverified.**
 
-近期潮玩／盲盒動能可作 category 佐證(2024–2025，仍請以最新數據覆核):中國潮玩收藏市場預估
-2026 年約 RMB 110B（US$15.3B）、年增約 20%；POP MART 估值一度達 ~US$40B、年營收約 US$1.8B，
-其中**絨毛品類 2024 年 YoY +1,289%**（見
-[China Briefing](https://www.china-briefing.com/news/decoding-labubu-phenomenon-china-collectible-toys-market/)）——
-絨毛暴增正好佐證本 pipeline 把「絨毛/盲盒」排在小物之後的 rollout 順序。但同期也出現約 43% 消費者
-「設計疲勞」與盲盒對未成年人的監管訊號（[China Briefing](https://www.china-briefing.com/news/decoding-labubu-phenomenon-china-collectible-toys-market/)、
-[Stormy AI](https://stormy.ai/blog/popmart-labubu-consumer-psychology-2026)）——提醒 IP 靠角色深度
-與世界觀續命，而非只靠稀缺噱頭。這些是會過時的錨點：引用前務必搜尋覆核最新值。
+- **全球授權商品零售 US$3,898 億、+5.45%**（2025 年數據，2026-05-19 發布）；其中**角色／娛樂類
+  US$1,618 億、+8%、佔 41.5%**，為最大類別；**北亞 +14.1% 為全球增速最快**。結構性翻轉值得
+  直接引用在定位段落：**動漫＋電玩＋漫畫＋社群合計 34%，已超越電影＋電視劇的 33%**
+  （[Licensing International 2026 Global Study](https://www.globenewswire.com/news-release/2026/05/19/3297905/0/en/Licensing-International-s-2026-Global-Study-Shows-Licensing-Industry-s-Continued-Growth-Reaching-389-8-Billion-in-Sales.html)）。
+- **日本角色商業市場：2026 年度預測 ¥2兆9,635億（前年度比 103.0%）**、2025 年度見込
+  ¥2兆8,767億（103.2%）（[矢野經濟研究所 2026-07-17](https://www.yano.co.jp/press-release/show/press_id/4146)）。
+  成長動力點名**平成復古**（1990s 末–2000s 初 IP 回潮）與角色店舖擴張。
+  ⚠️ **讀數陷阱**：日文「前年度比103.0%」是「達前年的 103.0%」＝**成長 3.0%**，不是成長 103%。
+  日本是**年增約 3% 的成熟市場**；任何把它寫成翻倍的敘述都是誤讀，會直接毀掉報告的可信度。
+- LINE Creators Market 已證明個人創作者可達 ¥1億級（LINE PR）；中國授權商品另可查 China
+  Licensing Expo 白皮書。Pick the numbers relevant to the user's market and goals.
+
+**潮玩／盲盒：把它當「週期」而不是「趨勢」講。** 2026 年的資料已經完整走完一輪，這是目前最有
+教學價值的 category 案例：
+
+- **高點**：POP MART FY2025 營收 RMB 371.2 億（+184.7%），**絨毛品類 RMB 187.08 億、+560.6%、
+  佔營收 50.4%**，首度超越手辦——絨毛的爆發佐證本 pipeline 把「絨毛/盲盒」排在小物之後的
+  rollout 順序。
+- **同一天的警訊**：財報日（2026-03-25）股價**暴跌 22.5%**，市場賣的是**單一 IP 依賴**——
+  THE MONSTERS（Labubu）一個 IP 就佔總營收 **38.1%**（2024 年僅 23%）
+  （[SCMP 2026-03-25](https://www.scmp.com/business/article/3347851/pop-mart-shares-dive-despite-soaring-profit-investors-fear-labubu-dependence)）。
+- **下行**：美國市場 2026 年 3 月 **-45%**、4 月 -42%（[Bloomberg 2026-04-29](https://www.bloomberg.com/news/articles/2026-04-29/pop-mart-s-us-sales-fall-45-as-it-struggles-to-find-next-labubu)）；
+  中國線上 2026 年 5 月 -5% YoY（[SCMP 2026-06-18](https://www.scmp.com/business/article/3357414/can-pop-mart-sustain-labubu-juggernaut-china-sales-cool)）。
+  二手市場「量增價崩」：Labubu 3.0 隱藏款零售 RMB 99 → 2025-06 峰值約 RMB 4,522（45.7 倍）
+  → 2025-12 約 RMB 540（-88%），2026 年新品**上市即破發**。
+- **最該教給使用者的那一句**：路透的分析指出崩跌主因是**供給而非需求**——POP MART 把絨毛產能
+  拉高約 10 倍。**稀缺性是被公司自己親手拆掉的**
+  （[Reuters/Investing 2025-10-22](https://www.investing.com/news/stock-market-news/analysislabubu-resale-price-fallsmay-be-more-about-supply-than-demand-4300833)）。
+  這直接支持本 pipeline 的兩條紀律：**IP 靠角色深度與世界觀續命**（worldbuilding.md），以及
+  **roadmap 每一階要寫 gate 條件而不是產能目標**（commercialization.md）。
+- **監管**：中國《盲盒經營行為規範指引（試行）》仍是 2023-06-15 版（第 23 條禁售 8 歲以下、
+  8 歲以上須監護人同意），2026 年媒體調查指出限售執行不力。**新的動作在新加坡**：2026-02 宣布
+  將立法規管盲盒（含集換卡牌），但年齡限制與機率揭露在 2026-03 國會答詢中表示暫緩。多市場
+  IP 的 rollout 要把這一格當作會變動的變數逐季覆核。
 
 ### 2. Competitor IP landscape & motif occupancy（3–5 searches）
 
@@ -68,6 +92,10 @@ class too, e.g. 3 soap/cosmetics, 30 food, 43 café): 9 (digital stickers), 16 (
 multi-jurisdiction with priority claims and Kumamon got squatted overseas — recommend early
 filing in target markets. Always label this section「初步檢索，非法律意見，正式申請前請洽商標
 師」.
+
+This step is only the **pre-design collision check**（名字能不能用）。實際的**佈局與送件時點**
+——Tier-0 類別、四件式申請（拉丁名/中文名/logo/角色圖形）、中國子類別逐項列舉、粉絲綽號防禦性
+註冊——屬 Phase 3 Step 13，見 `references/ip-protection.md` §5。兩者不要混在同一節寫。
 
 ### 6. Cultural screen（when the IP targets more than one market）
 

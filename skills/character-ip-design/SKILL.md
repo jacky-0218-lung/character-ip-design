@@ -204,6 +204,24 @@ record）** — the Step 3 interior compressed into a machine-readable lore/性�
 canonical description. Honesty rules from that reference apply: sourced or labeled estimates,
 gates not promises, 非法律意見 disclaimers.
 
+### Step 13 — 確權與合規（Rights & Compliance）
+
+Read `references/ip-protection.md` **when the brief is a full-pipeline IP, when any artwork was
+AI-generated (i.e. whenever rendering.md Lane 3 ran), or when the user asks about 版權/商標/
+可不可以商用**. Quick-mascot briefs read only its §1 and the Tier-0 list in §5. Produce the
+確權與合規 block per that reference's §10 template. The three things most users get wrong, and
+which this step exists to fix:
+
+- **著作權是弱腿、商標是承重牆** — no jurisdiction's trademark law has an authorship
+  requirement; copyright treatment of AI output differs sharply by market. Never tell a user
+  "你擁有著作權"; state the market's position and what the workflow did to maximize the claim.
+- **公開發表前**是商標 Tier-0 送件與（若適用）外觀設計專利的最後時點 — 絕對新穎性不可逆,
+  and a hit character outruns its own trademark portfolio (the LAFUFU case).
+- **創作歷程要即時留存** — prompt log, discarded outputs, hand-redrawn areas. An after-the-fact
+  re-enactment has already lost in court. This pipeline's own discipline (a human-redrawn flat
+  SVG identity master under any AI render) is the strongest evidence available — say so in the
+  bible.
+
 ---
 
 ## Common failure modes — check your own work
@@ -231,6 +249,11 @@ gates not promises, 非法律意見 disclaimers.
 Famous IPs are analysis material and register references only. Genre conventions are free;
 a specific IP's symbol combination never is. "Like Labubu" → extract the principle, amplify a
 different feature, say so. This protects the user legally and competitively.
+
+The same rule applies **inside AI prompts**: never put a brand, IP, or living-artist name into
+a generation prompt — describe the register instead. Models reproduce recognizable IP from
+prompts that never name it, and 2026 case law has been shifting liability toward the person who
+prompts, publishes, and monetizes. `references/ip-protection.md` §7.
 
 ## Deliverables & language
 

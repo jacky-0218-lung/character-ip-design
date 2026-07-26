@@ -18,6 +18,8 @@
 - **13 種畫風庫**（軟糖圓潤／盲盒潮玩／像素／1930 橡膠管／蠟筆手繪／昭和復古／Y2K／水墨…）＋庫外風格上網研究協定
 - **四條精緻渲染 lane**：賽璐璐立繪／3D 潮玩渲染／質感印刷／AI 生圖 prompt 套件
 - **多格式輸出**：SVG 母檔 → LINE 貼圖 PNG、圓形 icon、印刷版、像素原生放大、輕量 GIF
+- **確權與合規**：AI 生成角色的著作權／商標／外觀設計專利該用什麼順序處理、創作歷程要留什麼、
+  商標 Tier-0 類別與中國子類別陷阱、EU AI Act 與中國《標識辦法》的 AI 標示義務（非法律意見）
 
 ### 一鍵安裝（把下面這段話貼給你的 AI Agent）
 
@@ -65,6 +67,7 @@ to a **commercialization plan**, not just a drawing. Three phases: **research & 
 - **13-style library** (soft-kawaii, blind-box, pixel, 1930s rubber-hose, crayon, Shōwa retro, Y2K, ink-wash…) plus a research protocol for any style the user names.
 - **Four premium rendering lanes**: cel-shade key visual, faux-3D toy render, print textures, and an AI-generation prompt package.
 - **Multi-format export**: SVG masters → LINE sticker PNGs, circle-safe icons, print plates, pixel nearest-neighbor, light GIF.
+- **Rights & compliance**: the right ordering for copyright / trademark / design-patent filings on an AI-assisted character, what provenance to log, Tier-0 trademark classes and China's sub-class trap, and AI-disclosure duties (EU AI Act Art. 50, China's labeling rules). Not legal advice.
 
 ### One-prompt install (paste this to your agent)
 

@@ -30,6 +30,8 @@ as a 渲染規格 block inside the design sheet's 風格規格 section.
   - Negative prompt 的正確用法（2026 已分流）
   - 外部向量生成（Recraft 路線）與 SVG 母檔的關係
   - On-model drift checklist
+  - Provenance log（確權用，不是選配）
+  - 提示詞裡的原創性防線
 - Lane 4 — 質感印刷 Print textures（水彩／riso／紙紋）
 - Choosing a lane
 
@@ -124,14 +126,28 @@ say which model it was tuned for is not reproducible next quarter.
 Identity preservation moved *into* the models; the old adapter stack is now the fallback,
 not the first move. Try in this order:
 
-1. **模型內建多參考**（第一線）。Attach the turnaround sheet plus prop references in one call.
-   Published quotas: Nano Banana Pro 約 5 角色 + 6 物件；Nano Banana 2 約 4 角色 + 10 物件，
-   合計上限約 14 張（[Gemini API
-   docs](https://ai.google.dev/gemini-api/docs/interactions/image-generation)）。A character
-   turnaround (4 views) + 6 props fits comfortably in one request.
-2. **Midjourney `--oref <turnaround URL>` + `--ow`**（風格化 IP）。`--ow` 預設約 100；**鎖角色
-   用 400–600**，只想借氛圍用 25–75。V8.1 的 `--s` 很少超過 250
-   （[V8.1 指南](https://www.ud.hk/en/blogs/insight/article/2026-05-13-midjourney-v81-power-guide)）。
+1. **模型內建多參考**（第一線）。**參考圖在 2026 已經「分槽」**——問題不是「丟幾張」，而是
+   「哪張圖放哪個槽」。官方配額（[Gemini API
+   docs](https://ai.google.dev/gemini-api/docs/image-generation)，2026-07 覆核）：
+
+   | 模型 ID | object | character | style |
+   |---------|--------|-----------|-------|
+   | `gemini-3-pro-image`（NB Pro） | 6 | **5** | 3 |
+   | `gemini-3.1-flash-image`（NB2） | 10 | **4** | — |
+   | `gemini-3.1-flash-lite-image` | 14 | **無 character 槽** | — |
+
+   turnaround sheet 放 **character 槽**、道具與場景參考放 object 槽。lite 版沒有角色槽，
+   不要拿來做 IP 一致性工作。`gemini-2.5-flash-image` 為 legacy，應遷移。
+2. **Midjourney `--oref <turnaround URL>` + `--ow`**（風格化 IP）。
+   **⚠️ 引用任何 Midjourney 教學前先讀這一段**：官方文件寫明 Omni Reference「compatible with
+   Midjourney version 7」，**V8 線（V8.2 為 2026-07 預設）沒有角色參考功能**——附上 `--oref`
+   會讓該 prompt **自動改跑 V7**；`--cref`/`--cw` 則只在 v6/niji 6。所以角色工作必須**顯式
+   pin `--v 7`** 並接受 V7 世代的美感，`--oref` 也**一次只吃一張參考圖**，且與 draft/fast
+   模式、inpainting 互斥。`--ow` 範圍 1–1000、**預設 100**，鎖角色往上調但留意過高會連風格
+   一起鎖死。想用 V8.1/8.2 的美感時，只用 `--sref` 做**風格**參考，角色仍由人重畫。
+   網路上絕大多數教學仍在描述舊行為，這是本 lane 最常見的坑。
+   （[Omni Reference](https://docs.midjourney.com/hc/en-us/articles/36285124473997)、
+   [Version](https://docs.midjourney.com/hc/en-us/articles/32199405667853-Version)）
 3. **角色 LoRA**（量產或需要無限姿勢自由度時）。訓練集 20–40 張，**其中至少 6–8 張是非正面
    角度**；caption everything EXCEPT the character — the trigger word is the thing you don't
    caption.
@@ -202,6 +218,9 @@ docs](https://www.recraft.ai/docs/recraft-models/recraft-V4)、[Ropewalk 實測
   密集構圖需要人工清 path，交付前檢查節點數、圖層命名、色票是否對應品牌色。
 - **紀律不變**：外部生成的向量進到本流程後，仍要通過 subtraction、appeal pass 與三項驗證才
   能成為 identity master。工具換了，關卡沒換。
+- **⚠️ 先確認方案層級**：Recraft **免費層生成的素材由 Recraft 擁有且禁止商業使用**。要拿來做
+  商用母檔基礎前務必確認訂閱層級。各家生圖平台的素材歸屬與補償條款差異極大，見
+  `references/ip-protection.md` §8。
 
 ### On-model drift checklist
 
@@ -213,6 +232,25 @@ Banana / GPT Image 2 級）縮小了差距但沒有消除——實測中 GPT Ima
 Nano Banana 2 只有 3/5，臉部保真會往插畫風漂移（[Vidguru 10 項盲
 測](https://www.vidguru.ai/blog/nano-banana-2-vs-gpt-image-2-comparison.html)）。所以是
 每一張都檢查，不是抽查。
+
+### Provenance log（確權用，不是選配）
+
+Lane 3 的最後一個產出物。記錄：模型與版本字串、完整 prompt、參數與 seed、**保留與捨棄的輸出
+分別是哪些**、哪些區域是人工重畫或 inpaint 的。這只多一個檔案，卻是日後主張著作權時唯一能拿
+得出來的東西——**事後重演的生成過程已經在中國法院敗訴過**。這一份紀錄同時服務四個目的（美/韓
+證明人類作者、中國證明獨創性、日本反駁依據性、維持平台補償條款資格），細節見
+`references/ip-protection.md` §3–§4。
+
+順帶一提，本 pipeline 天然佔優勢：**identity master 是人工重畫的 flat SVG，AI 生圖只是
+presentation 層**。這條原本為印刷可重製性而設的紀律，恰好是最強的人類創作貢獻證據——記得在
+IP bible 裡明說。
+
+### 提示詞裡的原創性防線
+
+**絕不在提示詞中放入任何品牌名、角色名或在世藝術家姓名**，包括「像 Labubu 那樣」。改用 register
+的文字描述（「deadpan、無眉、寬距眼、啞光乙烯基質感」）。理由不只是原創性：模型會在提示詞完全
+未提及該 IP 的情況下生出可辨識的知名角色，而 2026 年的判決趨勢正把責任推向**下提示、發布、
+變現的那個人**。見 `references/ip-protection.md` §7。
 
 ## Lane 4 — 質感印刷 Print textures（水彩／riso／紙紋）
 

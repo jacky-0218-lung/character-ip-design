@@ -156,6 +156,8 @@ sections; full-pipeline briefs (scope ladder) add the ⊕ sections from Phase 1 
 ⊕ ## KPI               （5–7 個指標＋檢查週期）
 ⊕ ## 商品化檢核        （印刷/絨毛/公仔可行性 gate 的通過狀況）
 ⊕ ## 授權就緒度        （licensing style guide 已備/待補清單）
+⊕ ## 確權與合規        （ip-protection.md §10：著作權現況/創作歷程留存/商標佈局/外觀設計專利
+                       時點/生圖工具與條款/AI 標示/公開前待辦。任何用到 AI 生圖的案子必附）
 ```
 
 ## Delivery

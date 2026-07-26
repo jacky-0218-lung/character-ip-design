@@ -14,7 +14,7 @@
 
 - **研究**：市場調查（競品 IP 佔位表、空白定位）、世界觀設定、角色深度分析（價值觀／渴望／禁忌清單／反差）
 - **設計**：三個概念方向讓你挑 → **同一角色三種畫風三聯圖讓你挑** → 超級符號（超級符號法）→ 剪影／延展／色彩三項驗證
-- **商業化**：系列規劃（含盲盒 12+1 慣例）、上市 roadmap（各階附啟動條件）、內容支柱、KPI、商標與文化檢核
+- **商業化**：系列規劃與**稀缺性管理**（含盲盒 12+1 慣例、隨機機制合規關卡）、上市 roadmap（各階附啟動條件）、內容支柱、KPI、商標與文化檢核、**角色行為設定檔（golden record）**
 - **13 種畫風庫**（軟糖圓潤／盲盒潮玩／像素／1930 橡膠管／蠟筆手繪／昭和復古／Y2K／水墨…）＋庫外風格上網研究協定
 - **四條精緻渲染 lane**：賽璐璐立繪／3D 潮玩渲染／質感印刷／AI 生圖 prompt 套件
 - **多格式輸出**：SVG 母檔 → LINE 貼圖 PNG、圓形 icon、印刷版、像素原生放大、輕量 GIF
@@ -44,6 +44,10 @@ python3 tools/check_repository.py
 python3 tools/skill_bundle.py digest skills/character-ip-design
 ```
 
+`check_repository.py` 除了倉庫守則，也會依 [Agent Skills 開放標準](https://agentskills.io/specification)
+驗證每個 skill 的 frontmatter（name 規則與目錄同名、description ≤ 1024 字元、欄位白名單、
+SKILL.md ≤ 500 行、references 連結可解析），確保這個 skill 在 Claude 之外的 agent 也能安裝。
+
 ### 授權
 
 Apache License 2.0，見 [LICENSE](LICENSE)。角色設計方法論以知名 IP 為分析素材；本 skill 只產出原創角色，並內建原創性防線，不複製任何既有 IP 的符號組合。
@@ -57,7 +61,7 @@ to a **commercialization plan**, not just a drawing. Three phases: **research & 
 
 - **Research**: market study (competitor-IP occupancy table, white-space positioning), worldview, and a character depth profile (values / desire / taboo list / the one "gap").
 - **Design**: 3 concept directions to choose from → **a 3-style triptych of the chosen character to pick from** → the Super Symbol method → silhouette / extension / color verification.
-- **Commercialization**: series plan (incl. the blind-box 12+1 convention), staged rollout roadmap with gate conditions, content pillars, KPIs, trademark & cultural screens.
+- **Commercialization**: series plan and **scarcity management** (incl. the blind-box 12+1 convention and random-mechanic compliance gates), staged rollout roadmap with gate conditions, content pillars, KPIs, trademark & cultural screens, and a machine-readable **character golden record**.
 - **13-style library** (soft-kawaii, blind-box, pixel, 1930s rubber-hose, crayon, Shōwa retro, Y2K, ink-wash…) plus a research protocol for any style the user names.
 - **Four premium rendering lanes**: cel-shade key visual, faux-3D toy render, print textures, and an AI-generation prompt package.
 - **Multi-format export**: SVG masters → LINE sticker PNGs, circle-safe icons, print plates, pixel nearest-neighbor, light GIF.

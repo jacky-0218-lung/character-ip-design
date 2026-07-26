@@ -12,6 +12,10 @@ description: >-
   only say「幫我設計一個角色/吉祥物」or "design a mascot", whatever art style they name, and
   even if they never use the word "IP". Also for diagnosing why an existing character isn't
   memorable, or simplifying an over-decorated one.
+license: Apache-2.0
+metadata:
+  author: jacky-0218-lung
+  version: "0.1.2"
 ---
 
 # Character IP Design（角色 IP 開發・超級符號法）
@@ -192,8 +196,13 @@ blind-box convention where relevant, cast expansion hooks, the extensibility tes
 小物 → 絨毛/盲盒 → 授權/聯名, each rung with its gate condition), **content pillars** derived
 from the character's 習慣/口頭禪, a **KPI sheet** (5–7 metrics with check cadence), **商品化
 檢核** (print/plush/figure feasibility gates), and **licensing readiness** notes (what a
-licensor-grade style guide still lacks). Honesty rules from that reference apply: sourced or
-labeled estimates, gates not promises, 非法律意見 disclaimers.
+licensor-grade style guide still lacks). If the plan involves a random-draw mechanic (盲盒/
+扭蛋), run that reference's **稀缺性管理**（供給是稀缺性的一部分——熱期擴產是價值破壞）and
+**合規關卡**（年齡門檻、機率揭露）. Full briefs also ship a **角色行為設定檔（golden
+record）** — the Step 3 interior compressed into a machine-readable lore/性格/情緒幅度/護欄/
+視覺不變量 file, which doubles as the licensing attachment and the AI prompt package's
+canonical description. Honesty rules from that reference apply: sourced or labeled estimates,
+gates not promises, 非法律意見 disclaimers.
 
 ---
 
@@ -213,6 +222,9 @@ labeled estimates, gates not promises, 非法律意見 disclaimers.
   a guess** (premium render of unverified design): as before — amplify one thing, verify it,
   render only what passed.
 - **Roadmap 畫大餅**: revenue promises, invented budgets. Gates and sourced numbers only.
+- **稀缺性當提款機**: a blind-box plan whose only lever is 產量 — scarcity managed as an
+  afterthought, or a mystery premium treated as the business's foundation rather than a
+  bonus. The 2025–26 Labubu cycle is the worked example; commercialization.md has the rules.
 
 ## Originality guardrail
 

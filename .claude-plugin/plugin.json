@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "character-ip-design",
+  "displayName": "Character IP Design（角色 IP 開發）",
+  "version": "0.1.2",
+  "description": "Full character-IP pipeline: market research, worldbuilding and a character depth profile, the Super Symbol design method with silhouette/extension/color verification, then commercialization, licensing readiness, and AI-era rights & compliance.",
+  "author": {
+    "name": "jacky-0218-lung",
+    "url": "https://github.com/jacky-0218-lung"
+  },
+  "homepage": "https://github.com/jacky-0218-lung/character-ip-design",
+  "repository": "https://github.com/jacky-0218-lung/character-ip-design",
+  "license": "Apache-2.0",
+  "keywords": [
+    "character-design",
+    "mascot",
+    "ip",
+    "branding",
+    "illustration",
+    "blind-box",
+    "licensing"
+  ]
+}

@@ -1,9 +1,30 @@
 # Installation plan
 
-Two modes. The quick path suits ordinary local installs. The verified path adds a bundle
-digest and an approval receipt for environments that want per-file review.
+Three modes. The plugin path is the shortest on Claude Code. The quick path suits any other
+agent. The verified path adds a bundle digest and an approval receipt for environments that
+want per-file review.
 
-## Quick install (recommended)
+## Plugin install (Claude Code / Cowork — recommended there)
+
+This repository is itself a plugin marketplace (`.claude-plugin/marketplace.json`), with the
+plugin sourced at `./` and the skill auto-discovered from `skills/character-ip-design/`:
+
+```text
+/plugin marketplace add jacky-0218-lung/character-ip-design
+/plugin install character-ip-design@character-ip-design
+```
+
+Notes:
+
+- Pin a branch or tag when adding the marketplace if you need reproducibility; the marketplace
+  source supports `ref` but not `sha` (individual plugin sources support both).
+- `version` is declared in both `.claude-plugin/plugin.json` and the marketplace entry, and is
+  kept in lockstep with the skill's own `metadata.version` by `tools/check_repository.py`. It
+  must be bumped for existing users to receive an update — an unchanged version reports
+  "already at the latest version".
+- Uninstall with `/plugin uninstall character-ip-design`.
+
+## Quick install (any agent)
 
 Give your agent the public repository URL, pinned to `main` or (for reproducibility) a release
 tag or full 40-character commit SHA, with the skill subtree path:
@@ -25,6 +46,7 @@ Ask the installer to:
 - Repository: `jacky-0218-lung/character-ip-design`
 - Skill name: `character-ip-design`
 - Skill source: `skills/character-ip-design`
+- Plugin / marketplace name: `character-ip-design` (manifests in `.claude-plugin/`)
 - Runtime: none required by the skill itself (Markdown + one self-contained HTML form)
 - Repo tooling runtime: Python 3.10+ (standard library only), for tests and packaging
 - External dependencies: none

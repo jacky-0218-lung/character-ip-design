@@ -6,6 +6,30 @@ All notable changes to this project are documented here. Format follows
 ## [Unreleased]
 
 ### Added
+- `.claude-plugin/marketplace.json` 與 `.claude-plugin/plugin.json` — 本 repo 現在**同時是一個
+  Claude Code plugin marketplace**，可用兩行指令安裝，不必手動搬檔案或知道 skills 目錄在哪：
+
+  ```text
+  /plugin marketplace add jacky-0218-lung/character-ip-design
+  /plugin install character-ip-design@character-ip-design
+  ```
+
+  plugin 以 `source: "./"` 指向 repo 自身，`skills/character-ip-design/` 由 Claude Code 自動
+  探索（不需宣告 `skills` 欄位）。研究時掃過三份主要 awesome 清單與同型的創意類 skill repo
+  （naming、anydesign、styleseed），**沒有一個做到可直接 `/plugin marketplace add`**——
+  styleseed 甚至有 `plugin.json` 卻漏了 `marketplace.json`，因此實際上裝不起來。
+  參考 [plugin-marketplaces](https://code.claude.com/docs/en/plugin-marketplaces)、
+  [plugins-reference](https://code.claude.com/docs/en/plugins-reference)。
+- `tools/check_repository.py` — 新增 plugin manifest 守門：marketplace 必要欄位與 kebab-case、
+  **保留名稱**（`agent-skills` 等 16 個官方保留名，用了會被判為不可信來源而停止載入）、相對
+  source 必須以 `./` 開頭且能解析到實際目錄、該目錄必須真的有 `SKILL.md` 或
+  `skills/<name>/SKILL.md`（否則安裝後空無一物）、`keywords`/`tags` 型別（寫成字串是載入錯誤
+  而非警告）、以及兩份 manifest 的 `name`/`version` 一致性。另加一條本 repo 專屬的不變量：
+  **plugin 版本必須與 SKILL.md 的 `metadata.version` 同步**——版本沒 bump，既有使用者就永遠
+  收不到更新。
+- `tests/test_plugin_manifest.py` — 對應的 8 項單元測試。
+- `install.md` / `README.md` — 新增 plugin 安裝路徑（中英雙語），並保留原本的一鍵貼上安裝法
+  給非 Claude Code 的 agent。
 - `references/commercialization.md` — 三個新章節：**系列規劃與稀缺性管理**（以 2025–26 的
   Labubu 週期為實證：二級市場溢價崩塌領先於營收下滑、熱期擴產是價值破壞、單一系列營收佔比
   1/3 警戒線）、**隨機機制合規關卡**（年齡門檻、機率與隱藏款揭露、單價上限方向）、以及

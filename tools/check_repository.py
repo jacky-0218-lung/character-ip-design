@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Repository guard: keep oversized, binary, or insecure-workflow files out of the repo,
-and hold every skill to the Agent Skills open standard.
+hold every skill to the Agent Skills open standard, and keep the plugin marketplace manifests
+installable.
 
 Run in CI and locally before tagging a release. Standard library only.
 
@@ -10,6 +11,7 @@ Anthropic published the format as), plus one Claude-specific listing-budget warn
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -138,6 +140,158 @@ def check_skills() -> list[str]:
     return errors
 
 
+# --- Claude Code plugin marketplace (code.claude.com/docs/en/plugin-marketplaces) ----------
+PLUGIN_DIR = ROOT / ".claude-plugin"
+MARKETPLACE_JSON = PLUGIN_DIR / "marketplace.json"
+PLUGIN_JSON = PLUGIN_DIR / "plugin.json"
+# Names Anthropic reserves for official marketplaces. A marketplace registered under one of
+# these stops loading and is reported as coming from an untrusted source.
+RESERVED_MARKETPLACE_NAMES = {
+    "claude-code-marketplace",
+    "claude-code-plugins",
+    "claude-plugins-official",
+    "claude-plugins-community",
+    "claude-community",
+    "anthropic-marketplace",
+    "anthropic-plugins",
+    "agent-skills",
+    "anthropic-agent-skills",
+    "knowledge-work-plugins",
+    "life-sciences",
+    "claude-for-legal",
+    "claude-for-financial-services",
+    "financial-services-plugins",
+    "first-party-plugins",
+    "healthcare",
+}
+
+
+def load_json(path: Path, errors: list[str]) -> dict | None:
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        errors.append(f"{path.relative_to(ROOT)}: missing — the repo is not installable via "
+                      "'/plugin marketplace add'")
+    except json.JSONDecodeError as exc:
+        errors.append(f"{path.relative_to(ROOT)}: invalid JSON ({exc})")
+    return None
+
+
+def check_plugin_manifests() -> list[str]:
+    """Validate the marketplace catalog and plugin manifest.
+
+    These two files are what make ``/plugin marketplace add <owner>/<repo>`` work. They are
+    easy to get subtly wrong in ways nothing else catches: a plugin.json without a
+    marketplace.json installs for nobody, and a version that is set but never bumped leaves
+    every existing user pinned to the old commit forever.
+    """
+    errors: list[str] = []
+    if not PLUGIN_DIR.is_dir():
+        return errors
+
+    market = load_json(MARKETPLACE_JSON, errors)
+    manifest = load_json(PLUGIN_JSON, errors)
+    if market is None:
+        return errors
+
+    name = market.get("name")
+    if not isinstance(name, str) or not name:
+        errors.append("marketplace.json: 'name' is required")
+    else:
+        if not SKILL_NAME.fullmatch(name):
+            errors.append(f"marketplace.json: name {name!r} must be kebab-case (a-z0-9, single "
+                          "internal hyphens)")
+        if name in RESERVED_MARKETPLACE_NAMES:
+            errors.append(f"marketplace.json: name {name!r} is reserved for official Anthropic "
+                          "marketplaces and will be rejected as untrusted")
+
+    owner = market.get("owner")
+    if not isinstance(owner, dict) or not owner.get("name"):
+        errors.append("marketplace.json: 'owner' must be an object with a non-empty 'name'")
+
+    plugins = market.get("plugins")
+    if not isinstance(plugins, list) or not plugins:
+        errors.append("marketplace.json: 'plugins' must be a non-empty array")
+        return errors
+
+    for index, entry in enumerate(plugins):
+        where = f"marketplace.json plugins[{index}]"
+        if not isinstance(entry, dict):
+            errors.append(f"{where}: must be an object")
+            continue
+        entry_name = entry.get("name")
+        if not isinstance(entry_name, str) or not SKILL_NAME.fullmatch(entry_name or ""):
+            errors.append(f"{where}: 'name' is required and must be kebab-case")
+        # A string type error (e.g. keywords as a string) is a hard load error, not a warning.
+        for field in ("keywords", "tags"):
+            if field in entry and not isinstance(entry[field], list):
+                errors.append(f"{where}: '{field}' must be an array, not {type(entry[field]).__name__}")
+
+        source = entry.get("source")
+        if source is None:
+            errors.append(f"{where}: 'source' is required")
+            continue
+        if isinstance(source, str):
+            if not source.startswith("./"):
+                errors.append(f"{where}: relative source {source!r} must start with './' "
+                              "(it resolves from the repo root, not from .claude-plugin/)")
+                continue
+            target = (ROOT / source).resolve()
+            if not target.is_dir():
+                errors.append(f"{where}: source {source!r} does not resolve to a directory")
+                continue
+            # The plugin must actually expose something loadable: a root SKILL.md, or the
+            # auto-discovered skills/ layout.
+            has_root_skill = (target / "SKILL.md").is_file()
+            has_skills_dir = any((target / "skills").glob("*/SKILL.md"))
+            if not (has_root_skill or has_skills_dir or "skills" in entry):
+                errors.append(f"{where}: source {source!r} contains no SKILL.md at its root and "
+                              "no skills/<name>/SKILL.md — nothing would install")
+        elif not isinstance(source, dict):
+            errors.append(f"{where}: 'source' must be a string path or an object")
+
+    if manifest is None:
+        return errors
+
+    if not isinstance(manifest.get("name"), str) or not manifest.get("name"):
+        errors.append("plugin.json: 'name' is required")
+    for field in ("keywords",):
+        if field in manifest and not isinstance(manifest[field], list):
+            errors.append(f"plugin.json: '{field}' must be an array")
+
+    # Self-hosted marketplace: the entry sourced at './' IS this plugin, so the two manifests
+    # must agree. Divergence here is silent — the marketplace entry name wins for /plugin,
+    # while plugin.json's name is what namespaces components.
+    self_entries = [e for e in plugins if isinstance(e, dict) and e.get("source") == "./"]
+    for entry in self_entries:
+        if entry.get("name") != manifest.get("name"):
+            errors.append(
+                f"marketplace entry {entry.get('name')!r} and plugin.json {manifest.get('name')!r} "
+                "describe the same directory but disagree on 'name'"
+            )
+        entry_version, manifest_version = entry.get("version"), manifest.get("version")
+        if entry_version and manifest_version and entry_version != manifest_version:
+            errors.append(
+                f"version mismatch: marketplace entry {entry_version!r} vs plugin.json "
+                f"{manifest_version!r} — plugin.json wins, so users would see the wrong version"
+            )
+
+    # Single-skill repo: keep the published plugin version and the skill's own metadata.version
+    # in lockstep, so a skill edit can't ship under a stale plugin version.
+    skill_md = SKILLS_DIR / (manifest.get("name") or "") / "SKILL.md"
+    if skill_md.is_file() and manifest.get("version"):
+        values, _ = parse_frontmatter(skill_md.read_text(encoding="utf-8"))
+        declared = (values or {}).get("metadata", "")
+        match = re.search(r"version:\s*[\"']?([^\s\"']+)", declared)
+        if match and match.group(1) != manifest["version"]:
+            errors.append(
+                f"version drift: plugin.json {manifest['version']!r} vs "
+                f"{skill_md.relative_to(ROOT)} metadata.version {match.group(1)!r} — bump both, "
+                "or existing users never receive the update"
+            )
+    return errors
+
+
 def relevant_files():
     for path in ROOT.rglob("*"):
         try:
@@ -180,6 +334,7 @@ def main() -> int:
             if "actions/checkout@" in text and "persist-credentials: false" not in text:
                 errors.append(f"checkout must disable persisted credentials: {relative}")
     errors.extend(check_skills())
+    errors.extend(check_plugin_manifests())
     if errors:
         for error in errors:
             print(f"error: {error}", file=sys.stderr)

@@ -21,7 +21,21 @@
 - **確權與合規**：AI 生成角色的著作權／商標／外觀設計專利該用什麼順序處理、創作歷程要留什麼、
   商標 Tier-0 類別與中國子類別陷阱、EU AI Act 與中國《標識辦法》的 AI 標示義務（非法律意見）
 
-### 一鍵安裝（把下面這段話貼給你的 AI Agent）
+### 安裝方式 A：Claude Code plugin（最快，兩行指令）
+
+本 repo 同時是一個 Claude Code plugin marketplace，在 Claude Code 或 Cowork 裡直接輸入：
+
+```text
+/plugin marketplace add jacky-0218-lung/character-ip-design
+/plugin install character-ip-design@character-ip-design
+```
+
+之後用 `/plugin update character-ip-design` 更新。這條路徑不需要手動搬檔案，也不必知道你的
+skills 目錄在哪。
+
+### 安裝方式 B：一鍵安裝（把下面這段話貼給你的 AI Agent）
+
+適合非 Claude Code 的 agent（Codex、Cursor…），或想自己控制安裝位置的人。
 
 > 請從 `https://github.com/jacky-0218-lung/character-ip-design/tree/main/skills/character-ip-design` 安裝 `character-ip-design` 這個 skill。優先用公開 repository 的直接下載；只有在直接下載因權限問題失敗時才退回 git clone。只安裝 `skills/character-ip-design` 這個子目錄到我 Agent 信任的 skills 目錄。若目的地已存在，請停止並回報，不要覆蓋。安裝完成後回報安裝路徑，並告訴我何時可以開始使用。
 
@@ -69,7 +83,21 @@ to a **commercialization plan**, not just a drawing. Three phases: **research & 
 - **Multi-format export**: SVG masters → LINE sticker PNGs, circle-safe icons, print plates, pixel nearest-neighbor, light GIF.
 - **Rights & compliance**: the right ordering for copyright / trademark / design-patent filings on an AI-assisted character, what provenance to log, Tier-0 trademark classes and China's sub-class trap, and AI-disclosure duties (EU AI Act Art. 50, China's labeling rules). Not legal advice.
 
-### One-prompt install (paste this to your agent)
+### Install A: as a Claude Code plugin (two commands)
+
+This repo doubles as a Claude Code plugin marketplace:
+
+```text
+/plugin marketplace add jacky-0218-lung/character-ip-design
+/plugin install character-ip-design@character-ip-design
+```
+
+Update later with `/plugin update character-ip-design`. No manual file copying, and you don't
+need to know where your skills directory lives.
+
+### Install B: one-prompt install (paste this to your agent)
+
+For non-Claude-Code agents (Codex, Cursor…) or when you want to control the install location.
 
 > Install the `character-ip-design` skill from `https://github.com/jacky-0218-lung/character-ip-design/tree/main/skills/character-ip-design`. Prefer direct download for this public repository and fall back to git clone only on permission errors. Install only the `skills/character-ip-design` subtree into my agent's trusted skills directory. If the destination already exists, stop and report it instead of overwriting. Report the installed path when done.
 

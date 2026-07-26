@@ -21,6 +21,7 @@ EXPECTED_REFERENCES = {
     "verification-tests.md",
     "output-spec.md",
     "commercialization.md",
+    "ip-protection.md",
 }
 
 
@@ -60,6 +61,22 @@ class TestSkillStructure(unittest.TestCase):
         self.assertGreater(len(desc), 200, "description should be detailed for reliable triggering")
         for kw in ("mascot", "吉祥物", "IP"):
             self.assertIn(kw, desc, f"description should mention {kw!r}")
+
+    def test_description_within_spec_limit(self):
+        # Agent Skills open standard: description is 1–1024 characters.
+        desc = frontmatter(read(SKILL_MD)).get("description", "")
+        self.assertLessEqual(len(desc), 1024, "description exceeds the 1024-character spec limit")
+
+    def test_frontmatter_keys_are_spec_allowed(self):
+        # Strict validators reject unknown top-level keys; custom data belongs under metadata.
+        allowed = {"name", "description", "license", "compatibility", "metadata", "allowed-tools"}
+        keys = set(frontmatter(read(SKILL_MD)))
+        self.assertTrue(keys <= allowed, f"non-standard frontmatter keys: {sorted(keys - allowed)}")
+
+    def test_skill_md_within_progressive_disclosure_budget(self):
+        # Detail belongs in references/, which load only when needed.
+        lines = len(read(SKILL_MD).splitlines())
+        self.assertLessEqual(lines, 500, f"SKILL.md is {lines} lines; move detail to references/")
 
     def test_all_expected_references_present(self):
         present = {p.name for p in REFERENCES.glob("*.md")}

@@ -12,6 +12,10 @@ description: >-
   only say「幫我設計一個角色/吉祥物」or "design a mascot", whatever art style they name, and
   even if they never use the word "IP". Also for diagnosing why an existing character isn't
   memorable, or simplifying an over-decorated one.
+license: Apache-2.0
+metadata:
+  author: jacky-0218-lung
+  version: "0.1.2"
 ---
 
 # Character IP Design（角色 IP 開發・超級符號法）
@@ -192,8 +196,31 @@ blind-box convention where relevant, cast expansion hooks, the extensibility tes
 小物 → 絨毛/盲盒 → 授權/聯名, each rung with its gate condition), **content pillars** derived
 from the character's 習慣/口頭禪, a **KPI sheet** (5–7 metrics with check cadence), **商品化
 檢核** (print/plush/figure feasibility gates), and **licensing readiness** notes (what a
-licensor-grade style guide still lacks). Honesty rules from that reference apply: sourced or
-labeled estimates, gates not promises, 非法律意見 disclaimers.
+licensor-grade style guide still lacks). If the plan involves a random-draw mechanic (盲盒/
+扭蛋), run that reference's **稀缺性管理**（供給是稀缺性的一部分——熱期擴產是價值破壞）and
+**合規關卡**（年齡門檻、機率揭露）. Full briefs also ship a **角色行為設定檔（golden
+record）** — the Step 3 interior compressed into a machine-readable lore/性格/情緒幅度/護欄/
+視覺不變量 file, which doubles as the licensing attachment and the AI prompt package's
+canonical description. Honesty rules from that reference apply: sourced or labeled estimates,
+gates not promises, 非法律意見 disclaimers.
+
+### Step 13 — 確權與合規（Rights & Compliance）
+
+Read `references/ip-protection.md` **when the brief is a full-pipeline IP, when any artwork was
+AI-generated (i.e. whenever rendering.md Lane 3 ran), or when the user asks about 版權/商標/
+可不可以商用**. Quick-mascot briefs read only its §1 and the Tier-0 list in §5. Produce the
+確權與合規 block per that reference's §10 template. The three things most users get wrong, and
+which this step exists to fix:
+
+- **著作權是弱腿、商標是承重牆** — no jurisdiction's trademark law has an authorship
+  requirement; copyright treatment of AI output differs sharply by market. Never tell a user
+  "你擁有著作權"; state the market's position and what the workflow did to maximize the claim.
+- **公開發表前**是商標 Tier-0 送件與（若適用）外觀設計專利的最後時點 — 絕對新穎性不可逆,
+  and a hit character outruns its own trademark portfolio (the LAFUFU case).
+- **創作歷程要即時留存** — prompt log, discarded outputs, hand-redrawn areas. An after-the-fact
+  re-enactment has already lost in court. This pipeline's own discipline (a human-redrawn flat
+  SVG identity master under any AI render) is the strongest evidence available — say so in the
+  bible.
 
 ---
 
@@ -213,12 +240,20 @@ labeled estimates, gates not promises, 非法律意見 disclaimers.
   a guess** (premium render of unverified design): as before — amplify one thing, verify it,
   render only what passed.
 - **Roadmap 畫大餅**: revenue promises, invented budgets. Gates and sourced numbers only.
+- **稀缺性當提款機**: a blind-box plan whose only lever is 產量 — scarcity managed as an
+  afterthought, or a mystery premium treated as the business's foundation rather than a
+  bonus. The 2025–26 Labubu cycle is the worked example; commercialization.md has the rules.
 
 ## Originality guardrail
 
 Famous IPs are analysis material and register references only. Genre conventions are free;
 a specific IP's symbol combination never is. "Like Labubu" → extract the principle, amplify a
 different feature, say so. This protects the user legally and competitively.
+
+The same rule applies **inside AI prompts**: never put a brand, IP, or living-artist name into
+a generation prompt — describe the register instead. Models reproduce recognizable IP from
+prompts that never name it, and 2026 case law has been shifting liability toward the person who
+prompts, publishes, and monetizes. `references/ip-protection.md` §7.
 
 ## Deliverables & language
 

@@ -54,6 +54,15 @@ a search, not a citation you may paste unverified.**
   （[Reuters/Investing 2025-10-22](https://www.investing.com/news/stock-market-news/analysislabubu-resale-price-fallsmay-be-more-about-supply-than-demand-4300833)）。
   這直接支持本 pipeline 的兩條紀律：**IP 靠角色深度與世界觀續命**（worldbuilding.md），以及
   **roadmap 每一階要寫 gate 條件而不是產能目標**（commercialization.md）。
+- **收尾（2026 上半年）**：龍頭自己踩了剎車。POP MART 董事長王寧在 2026-03-25 法說把今年比喻為
+  **「F1 進站休整」**、明講不追求「增收不增利」的激進成長並下修營收增速目標；同期新品「復古
+  理髮店」上市即**破發**（二手均價低於零售），原定 7 月的上海 PTS 潮玩嘉年華取消。與此同時
+  **新勢力在補位**：TNTSPACE（50+ 自有 IP，紅杉中國參與新一輪）、黑玩（A 輪過億、2026 零售
+  目標 10 億）、AYOR TOYS 都在同期完成融資。**要教給使用者的判讀**：這是**品類的週期修正，不是
+  品類的死亡**——熱期靠供給換來的營收會在冷期原數還回去，而活下來的做法是換賽道（場景、
+  BJD 等高收藏品類）與換節奏，不是加大產能。
+  （[36氪](https://36kr.com/p/3875690969640969)、
+  [新浪財經 2026-03-25](https://finance.sina.com.cn/jjxw/2026-03-25/doc-inhsffcs6760903.shtml)）
 - **監管**：中國《盲盒經營行為規範指引（試行）》仍是 2023-06-15 版（第 23 條禁售 8 歲以下、
   8 歲以上須監護人同意），2026 年媒體調查指出限售執行不力。**新的動作在新加坡**：2026-02 宣布
   將立法規管盲盒（含集換卡牌），但年齡限制與機率揭露在 2026-03 國會答詢中表示暫緩。多市場
@@ -68,6 +77,26 @@ which motifs are taken (cute cat in TW stickers: crowded; 台灣雲豹: open), w
 registers are saturated, which persona registers (healing 治癒 / deadpan / hyper-genki) are
 crowded. Industry precedent: Yano's reports literally map the "cute" category as occupied
 territory (Chiikawa + Sanrio); occupancy analysis is standard practice, not paranoia.
+
+**第四個佔位維度：場景（2026 起必加）。** motif／風格／人格語域講的是「長什麼樣」，但 2026
+的產業共識已經移到「這個角色在使用者生活裡佔哪個位置」——從供給驅動（出新 IP 就有增量）轉為
+**場景爭奪**。所以佔位表加一欄 **場景佔位**，並分兩層讀：
+
+- **輕場景**（桌面擺件／隨身吊飾／穿戴／解壓把玩／手機殼）：低單價、高頻率、決定日常曝光。
+  奧飛的小顆粒矩陣就是逐一對應場景切的——疊疊樂（桌面）、粒粒（陪伴）、咔咔（解壓）、
+  扣扣（穿戴），疊疊樂單一系列銷量破 8,000 萬只。
+- **重場景**（樂園／門店／影視／餐飲）：高成本、低頻率、決定情感深度。POP MART 同期把力氣
+  放在樂園新區、popop 進駐 6 城市、LABUBU 電影與甜品業務。
+
+獨立創作者與中小品牌**不需要重場景**，但一定要能回答「輕場景是哪一個」——沒有場景答案的角色
+只能靠新鮮感活著。這一欄也直接餵給 Phase 3 的 rollout ladder。
+
+**掃描範圍要跨出品類。** 2026 上半年上榜的競爭者已經不只是潮玩公司：茶飲（蜜雪冰城）與遊戲
+IP（王者榮耀、英雄聯盟）都在搶同一批貨架與同一批預算，而**本土 IP 的上榜次數約為海外 IP 的
+三倍**（中國市場；YOYO 75 次、兔閃閃 ShyShy 58 次領先）。只掃同品類會系統性低估競爭密度——
+競品地圖要問的是「受眾的錢與桌面被誰佔走」，不是「誰跟我同一個 SKU 分類」。
+（[36氪：2026 上半年潮玩市場](https://36kr.com/p/3875690969640969)、
+[澎湃：潮玩 2026 下半場，加入「場景爭奪」](https://m.thepaper.cn/newsDetail_forward_33325330)）
 
 ### 3. Audience insight（1–3 searches）
 

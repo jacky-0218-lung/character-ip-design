@@ -6,6 +6,23 @@ All notable changes to this project are documented here. Format follows
 ## [Unreleased]
 
 ### Added
+- `SKILL.md` — **Pipeline checklist（執行檢核表）**：一張可直接複製到工作筆記的 13 步打勾清單，
+  標出哪些步驟只在 full IP brief 跑。依 Anthropic 官方
+  [Skill authoring best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
+  的「Use Workflows for Complex Tasks — 多步驟流程要給可複製的 checklist」與「Implement
+  Feedback Loops」兩條建議。這條產線有 13 個步驟又有 scope ladder 分支，最常見的失敗不是做錯
+  而是**漏做**（跳過三項驗證、忘記 Step 13 確權、full brief 卻沒出 roadmap）；把狀態外顯成
+  checklist 是官方明列、成本最低的修法。SKILL.md 仍為 289 行，遠低於 500 行上限。
+- `references/market-research.md` §2 — 競品佔位表新增**第四個佔位維度：場景**（輕場景／重場景
+  兩層讀法），並要求**掃描範圍跨出品類**：2026 上半年與潮玩爭同一批貨架的已包含茶飲（蜜雪
+  冰城）與遊戲 IP（王者榮耀、英雄聯盟），且中國市場**本土 IP 上榜次數約為海外 IP 的三倍**
+  （YOYO 75 次、兔閃閃 ShyShy 58 次）。只掃同品類會系統性低估競爭密度。
+- `references/commercialization.md` — Rollout ladder 每一階新增 `場景：___` 欄位與**輕/重場景
+  對照表**，並要求與 market-research §2 的場景欄位一致。產業共識已從「誰有新 IP」移到**場景
+  爭奪**：奧飛以小顆粒矩陣逐一對應場景（疊疊樂＝桌面，銷量破 8,000 萬只；粒粒＝陪伴、咔咔＝
+  解壓、扣扣＝穿戴），POP MART 則投向樂園／門店／電影等重場景。獨立創作者不碰重場景，但必須
+  能一句話回答「這個角色平常出現在使用者的哪裡」。
+
 - `.claude-plugin/marketplace.json` 與 `.claude-plugin/plugin.json` — 本 repo 現在**同時是一個
   Claude Code plugin marketplace**，可用兩行指令安裝，不必手動搬檔案或知道 skills 目錄在哪：
 
@@ -59,6 +76,12 @@ All notable changes to this project are documented here. Format follows
 - `output-spec.md` — IP bible 結構新增 ⊕「確權與合規」章節。
 
 ### Changed
+- `references/market-research.md` 潮玩週期段補上**收尾（2026 上半年）**：POP MART 王寧於
+  2026-03-25 法說把今年定調為「F1 進站休整」、明講不追求「增收不增利」並下修營收增速目標；
+  新品「復古理髮店」上市即破發，原定 7 月的上海 PTS 潮玩嘉年華取消；同期 TNTSPACE／黑玩／
+  AYOR TOYS 等新勢力完成融資。判讀寫成一句可教的話：**這是品類的週期修正，不是品類的死亡**
+  ——熱期靠供給換來的營收會在冷期原數還回去，活下來靠換賽道（場景、BJD 等高收藏品類）與換
+  節奏，不是加大產能。
 - `references/rendering.md` Lane 3 模型段整段重寫為 2026-07 的實測樣貌：改為「依工作分派」
   的選型表（並點出**編輯榜才是 IP 工作的關鍵榜，前五名實質並列**）、角色一致性的新優先序
   （模型內建多參考 → Midjourney `--oref` → LoRA → IPAdapter/InstantID 降級為自架選項）、

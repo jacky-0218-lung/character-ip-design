@@ -1,5 +1,5 @@
 ---
-name: character-ip-design
+name: designing-character-ips
 description: >-
   Full character-IP development pipeline — market research first, then worldbuilding and a
   character depth profile, then design (Super Symbol 超級符號 method: 3 concept directions, a

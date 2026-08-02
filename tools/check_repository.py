@@ -278,18 +278,51 @@ def check_plugin_manifests() -> list[str]:
 
     # Single-skill repo: keep the published plugin version and the skill's own metadata.version
     # in lockstep, so a skill edit can't ship under a stale plugin version.
-    skill_md = SKILLS_DIR / (manifest.get("name") or "") / "SKILL.md"
-    if skill_md.is_file() and manifest.get("version"):
-        values, _ = parse_frontmatter(skill_md.read_text(encoding="utf-8"))
-        declared = (values or {}).get("metadata", "")
-        match = re.search(r"version:\s*[\"']?([^\s\"']+)", declared)
-        if match and match.group(1) != manifest["version"]:
-            errors.append(
-                f"version drift: plugin.json {manifest['version']!r} vs "
-                f"{skill_md.relative_to(ROOT)} metadata.version {match.group(1)!r} — bump both, "
-                "or existing users never receive the update"
-            )
+    if manifest.get("version"):
+        skill_md, anchor_error = resolve_version_anchor(manifest.get("name") or "")
+        if anchor_error:
+            errors.append(anchor_error)
+        elif skill_md is not None:
+            values, _ = parse_frontmatter(skill_md.read_text(encoding="utf-8"))
+            declared = (values or {}).get("metadata", "")
+            match = re.search(r"version:\s*[\"']?([^\s\"']+)", declared)
+            if match and match.group(1) != manifest["version"]:
+                errors.append(
+                    f"version drift: plugin.json {manifest['version']!r} vs "
+                    f"{skill_md.relative_to(ROOT)} metadata.version {match.group(1)!r} — bump "
+                    "both, or existing users never receive the update"
+                )
     return errors
+
+
+def resolve_version_anchor(plugin_name: str) -> tuple[Path | None, str | None]:
+    """Find the SKILL.md whose metadata.version must track plugin.json's version.
+
+    The plugin name and the skill name are allowed to differ — the plugin name is what users
+    type in ``/plugin install``, while the skill name follows the Agent Skills naming
+    guidance (gerund form). So the anchor cannot simply be ``skills/<plugin name>/``: this
+    repo's skill is ``designing-character-ips`` while the plugin stays ``character-ip-design``
+    for install-command stability.
+
+    Resolution order: exact name match, else the sole skill in ``skills/``. Returns
+    ``(path, None)`` when resolved, ``(None, error)`` when the repo has several skills and
+    none matches — leaving that unreported would silently disable the version-drift check,
+    which is exactly how a stale published version reaches users unnoticed.
+    """
+    exact = SKILLS_DIR / plugin_name / "SKILL.md"
+    if exact.is_file():
+        return exact, None
+    candidates = sorted(SKILLS_DIR.glob("*/SKILL.md"))
+    if len(candidates) == 1:
+        return candidates[0], None
+    if not candidates:
+        return None, None
+    names = ", ".join(sorted(p.parent.name for p in candidates))
+    return None, (
+        f"plugin.json name {plugin_name!r} matches no skill directory, and skills/ holds "
+        f"{len(candidates)} skills ({names}) — the plugin/skill version-drift check cannot "
+        "anchor. Rename the plugin to match one skill, or declare the mapping explicitly."
+    )
 
 
 def relevant_files():

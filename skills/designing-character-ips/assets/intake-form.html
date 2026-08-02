@@ -43,7 +43,7 @@
 <body>
 <div class="wrap">
   <h1>角色 IP 開發 — 需求表單</h1>
-  <p class="sub">填完後按「產生需求摘要」，把摘要複製貼回對話，Claude 就會照 character-ip-design skill 的完整流程往下走。<br>
+  <p class="sub">填完後按「產生需求摘要」，把摘要複製貼回對話，Claude 就會照 designing-character-ips skill 的完整流程往下走。<br>
   Fill this in, generate the brief, paste it back to Claude — the skill runs from there.</p>
 
   <div class="card">
@@ -126,7 +126,7 @@
     <div class="out" id="out"></div>
   </div>
 
-  <footer>character-ip-design skill · 本表單在瀏覽器本機執行，不上傳任何資料</footer>
+  <footer>designing-character-ips skill · 本表單在瀏覽器本機執行，不上傳任何資料</footer>
 </div>
 
 <script>
@@ -152,7 +152,7 @@
     lines.push("9. 完成度: "+(radio('finish')||"平面識別系統即可"));
     if(val('notes')) lines.push("10. 補充: "+val('notes'));
     lines.push("");
-    lines.push("→ 請依 character-ip-design skill 的流程進行；缺的欄位用合理假設並在開頭標明。");
+    lines.push("→ 請依 designing-character-ips skill 的流程進行；缺的欄位用合理假設並在開頭標明。");
     return lines.join("\n");
   }
 

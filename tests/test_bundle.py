@@ -11,7 +11,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 import skill_bundle  # noqa: E402
 
-SKILL_DIR = ROOT / "skills" / "character-ip-design"
+SKILL_DIR = ROOT / "skills" / "designing-character-ips"
 
 
 class TestBundleDigest(unittest.TestCase):
@@ -46,7 +46,7 @@ class TestBundleDigest(unittest.TestCase):
             repository="jacky-0218-lung/character-ip-design",
             origin="https://github.com/jacky-0218-lung/character-ip-design",
             commit="0" * 40,
-            destination="/home/user/.claude/skills/character-ip-design",
+            destination="/home/user/.claude/skills/designing-character-ips",
         )
         for key in ("algorithm", "repository", "commit", "bundle_digest", "files"):
             self.assertIn(key, receipt)

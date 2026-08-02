@@ -7,7 +7,7 @@ want per-file review.
 ## Plugin install (Claude Code / Cowork — recommended there)
 
 This repository is itself a plugin marketplace (`.claude-plugin/marketplace.json`), with the
-plugin sourced at `./` and the skill auto-discovered from `skills/character-ip-design/`:
+plugin sourced at `./` and the skill auto-discovered from `skills/designing-character-ips/`:
 
 ```text
 /plugin marketplace add jacky-0218-lung/character-ip-design
@@ -30,13 +30,13 @@ Give your agent the public repository URL, pinned to `main` or (for reproducibil
 tag or full 40-character commit SHA, with the skill subtree path:
 
 ```text
-https://github.com/jacky-0218-lung/character-ip-design/tree/main/skills/character-ip-design
+https://github.com/jacky-0218-lung/character-ip-design/tree/main/skills/designing-character-ips
 ```
 
 Ask the installer to:
 
 1. Prefer direct download; use git only if direct download fails on auth/permission.
-2. Install only the `skills/character-ip-design` subtree.
+2. Install only the `skills/designing-character-ips` subtree.
 3. Refuse to overwrite an existing destination and report it instead.
 4. Not execute any downloaded file merely to install the skill.
 5. Report the installed path. The skill is available on the next turn.
@@ -44,9 +44,13 @@ Ask the installer to:
 ## Package identity
 
 - Repository: `jacky-0218-lung/character-ip-design`
-- Skill name: `character-ip-design`
-- Skill source: `skills/character-ip-design`
+- Skill name: `designing-character-ips`
+- Skill source: `skills/designing-character-ips`
 - Plugin / marketplace name: `character-ip-design` (manifests in `.claude-plugin/`)
+- The plugin name and the skill name differ on purpose: the plugin name keeps `/plugin
+  install` commands stable across releases, while the skill name follows the Agent Skills
+  gerund-form guidance. `tools/check_repository.py` resolves the version-drift anchor by
+  falling back to the sole skill in `skills/`, and errors out if that is ever ambiguous.
 - Runtime: none required by the skill itself (Markdown + one self-contained HTML form)
 - Repo tooling runtime: Python 3.10+ (standard library only), for tests and packaging
 - External dependencies: none
@@ -55,11 +59,11 @@ Ask the installer to:
 
 ## Destination
 
-Install the verified `skills/character-ip-design` subtree into your agent's trusted skills
+Install the verified `skills/designing-character-ips` subtree into your agent's trusted skills
 directory. Common locations:
 
-- Claude Code / Cowork: `~/.claude/skills/character-ip-design`
-- Codex: `$CODEX_HOME/skills/character-ip-design` (or `~/.codex/skills/character-ip-design`)
+- Claude Code / Cowork: `~/.claude/skills/designing-character-ips`
+- Codex: `$CODEX_HOME/skills/designing-character-ips` (or `~/.codex/skills/designing-character-ips`)
 
 Restart or open a new session if the skill is not discovered immediately.
 
@@ -72,7 +76,7 @@ For per-file review and an integrity-bound receipt:
 2. Compute the canonical bundle digest of the staged skill directory:
 
    ```bash
-   python3 tools/skill_bundle.py digest skills/character-ip-design
+   python3 tools/skill_bundle.py digest skills/designing-character-ips
    ```
 
    The digest covers file contents, names, and layout (`character-ip-design-bundle-v1`). Any

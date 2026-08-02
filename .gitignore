@@ -6,3 +6,6 @@ __pycache__/
 /work/
 /private/
 *.tmp
+
+# Generated eval run sheets (tools/run_evals.py pack)
+evals/runs/

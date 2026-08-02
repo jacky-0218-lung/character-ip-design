@@ -2,7 +2,7 @@
   "name": "diagnose-unmemorable-character",
   "query": "我現在的角色不夠好記,幫我看看問題出在哪、怎麼變好記",
   "should_trigger": true,
-  "skills": ["character-ip-design"],
+  "skills": ["designing-character-ips"],
   "expected_behavior": [
     "觸發本 skill 的診斷路徑(不必從零重畫)",
     "用剪影測試檢查:去掉顏色只剩黑影時是否還認得出、超級符號是否清晰",

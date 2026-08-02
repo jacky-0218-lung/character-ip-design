@@ -2,7 +2,7 @@
   "name": "named-style-triptych",
   "query": "我想要一個水墨風的品牌角色",
   "should_trigger": true,
-  "skills": ["character-ip-design"],
+  "skills": ["designing-character-ips"],
   "expected_behavior": [
     "先做 intake,再進設計流程",
     "在風格三聯圖中提供橫跨真正不同 register 的三種風格(而非三種同質變體)給使用者挑",

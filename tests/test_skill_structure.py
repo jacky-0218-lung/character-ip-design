@@ -7,7 +7,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL_DIR = ROOT / "skills" / "character-ip-design"
+SKILL_DIR = ROOT / "skills" / "designing-character-ips"
 SKILL_MD = SKILL_DIR / "SKILL.md"
 REFERENCES = SKILL_DIR / "references"
 
@@ -52,7 +52,7 @@ class TestSkillStructure(unittest.TestCase):
 
     def test_frontmatter_name_matches_directory(self):
         fm = frontmatter(read(SKILL_MD))
-        self.assertEqual(fm.get("name"), "character-ip-design")
+        self.assertEqual(fm.get("name"), "designing-character-ips")
 
     def test_description_is_substantial(self):
         fm = frontmatter(read(SKILL_MD))

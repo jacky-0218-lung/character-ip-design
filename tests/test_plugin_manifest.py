@@ -13,7 +13,10 @@ from __future__ import annotations
 
 import json
 import re
+import sys
+import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,6 +24,10 @@ PLUGIN_DIR = ROOT / ".claude-plugin"
 MARKETPLACE = PLUGIN_DIR / "marketplace.json"
 MANIFEST = PLUGIN_DIR / "plugin.json"
 KEBAB = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+
+sys.path.insert(0, str(ROOT / "tools"))
+import check_repository  # noqa: E402
+from check_repository import resolve_version_anchor  # noqa: E402
 
 
 def load(path: Path) -> dict:
@@ -75,7 +82,9 @@ class TestMarketplace(unittest.TestCase):
     def test_version_matches_skill_metadata(self):
         """A published version that never moves means users never get updates."""
         manifest = load(MANIFEST)
-        skill_md = ROOT / "skills" / manifest["name"] / "SKILL.md"
+        skill_md, anchor_error = resolve_version_anchor(manifest["name"])
+        self.assertIsNone(anchor_error, anchor_error)
+        self.assertIsNotNone(skill_md, "no SKILL.md to anchor the version check")
         text = skill_md.read_text(encoding="utf-8")
         found = re.search(r"^\s+version:\s*[\"']?([^\s\"']+)", text, re.M)
         self.assertIsNotNone(found, "SKILL.md frontmatter should declare metadata.version")
@@ -91,6 +100,52 @@ class TestMarketplace(unittest.TestCase):
             "first-party-plugins", "healthcare",
         }
         self.assertNotIn(load(MARKETPLACE)["name"], reserved)
+
+
+class TestVersionAnchorResolution(unittest.TestCase):
+    """The plugin name and the skill name are allowed to diverge (the plugin name keeps
+    install commands stable; the skill name follows the gerund guidance). The anchor
+    resolution must survive that without silently disabling the version-drift check."""
+
+    def _skills_tree(self, root: Path, names: list[str]) -> None:
+        for name in names:
+            directory = root / name
+            directory.mkdir(parents=True)
+            (directory / "SKILL.md").write_text("---\nname: x\n---\n", encoding="utf-8")
+
+    def test_exact_name_match_wins(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._skills_tree(root, ["alpha-skill", "beta-skill"])
+            with mock.patch.object(check_repository, "SKILLS_DIR", root):
+                path, error = check_repository.resolve_version_anchor("beta-skill")
+            self.assertIsNone(error)
+            self.assertEqual(path.parent.name, "beta-skill")
+
+    def test_falls_back_to_the_sole_skill_when_names_diverge(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._skills_tree(root, ["designing-character-ips"])
+            with mock.patch.object(check_repository, "SKILLS_DIR", root):
+                path, error = check_repository.resolve_version_anchor("character-ip-design")
+            self.assertIsNone(error)
+            self.assertEqual(path.parent.name, "designing-character-ips")
+
+    def test_ambiguous_anchor_is_an_error_not_a_silent_skip(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._skills_tree(root, ["alpha-skill", "beta-skill"])
+            with mock.patch.object(check_repository, "SKILLS_DIR", root):
+                path, error = check_repository.resolve_version_anchor("nope")
+            self.assertIsNone(path)
+            self.assertIn("cannot", error)
+
+    def test_this_repo_resolves_and_the_names_do_diverge(self):
+        manifest = load(MANIFEST)
+        path, error = check_repository.resolve_version_anchor(manifest["name"])
+        self.assertIsNone(error)
+        self.assertNotEqual(path.parent.name, manifest["name"],
+                            "expected the skill name to follow the gerund guidance")
 
 
 if __name__ == "__main__":

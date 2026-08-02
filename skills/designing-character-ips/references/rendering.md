@@ -24,10 +24,9 @@ as a 渲染規格 block inside the design sheet's 風格規格 section.
 - Lane 1 — 賽璐璐 Cel-shade（anime-grade vector）
 - Lane 2 — 3D 潮玩渲染 Faux-3D toy render
 - Lane 3 — AI 生圖 Prompt package（外部工具的精緻筆觸稿）
-  - 模型選型：依工作分派，不依榜單第一
-  - 角色一致性：2026 的方法優先序與硬數字
+  - 模型選型與角色一致性：跨版本原則（不會過期的部分）
+  - Old patterns（版本快照，會過期）
   - 系列 prompt 架構：fixed / variable 雙區塊
-  - Negative prompt 的正確用法（2026 已分流）
   - 外部向量生成（Recraft 路線）與 SVG 母檔的關係
   - On-model drift checklist
   - Provenance log（確權用，不是選配）
@@ -98,16 +97,45 @@ external tools. Structure — all five parts:
 4. **Per-tool parameter blocks** — see the model-selection and consistency subsections below.
 5. **On-model drift checklist** — see the checklist subsection below.
 
-### 模型選型：依工作分派，不依榜單第一
+### 模型選型與角色一致性：跨版本原則（不會過期的部分）
 
-Model names and rankings move every few months (snapshot 2026-07). Two habits outlive any
-version: **pick by the job, and read the editing leaderboard, not the generation one** — 80%
-of IP work is "change one thing, keep the character", which is editing. On the generation
-board GPT Image 2 leads by a wide margin, but on the editing board the top five sit within
-~14 Elo of each other, i.e. effectively tied ([Artificial Analysis
-生成榜](https://artificialanalysis.ai/image/leaderboard/text-to-image) ·
-[編輯榜](https://artificialanalysis.ai/image/leaderboard/editing)). So choose on cost,
-reference-image quota, and API convenience rather than on a headline rank.
+Model names, rankings, quotas, and version flags change every few months. **These nine rules
+have outlived every model generation so far — learn these, look up the rest.** The dated
+snapshots live in「Old patterns（版本快照）」below.
+
+1. **依工作分派選型，不依榜單第一名。** 而且 IP 工作要讀**編輯榜**而不是生成榜——80% 的工作是
+   「改一個地方、保住角色」，那是編輯任務。生成榜第一名對這條產線幫助有限。
+2. **參考圖是「分槽」的，不是「丟幾張」。** 問題永遠是「哪張圖放哪個槽」：turnaround sheet 放
+   **character 槽**，道具與場景參考放 object 槽，風格板放 style 槽。**沒有 character 槽的模型
+   不要拿來做 IP 一致性工作**——這是選型的硬門檻，比畫質重要。
+3. **identity block 每次重複注入。** canonical description 那一段開頭每一個 prompt，不要假設
+   模型記得上一輪。
+4. **turnaround sheet 是 Lane 3 的第一個產出物，不是選配。** 一次生成四格拼版（front / 3-4 /
+   side / back，A-pose、白底、正交、無投影、每視角 ≥2048 px），因為它同時是後續多參考輸入、
+   LoRA 訓練集、以及 3D／打樣的參考來源。**分四次生成必然對不齊。**
+5. **一致性方法的優先序**：模型內建多參考 → 該模型官方的角色參考參數 → 角色 LoRA →
+   adapter（IPAdapter / InstantID / ControlNet）自架管線。身分保持已經移進模型裡，adapter 疊法
+   是退路而不是首選。
+6. **跨風格轉換衰減最嚴重**，而本 pipeline 特別容易踩到：平面向量 → 3D 玩具渲染 → 絨毛材質
+   就是連續三次跨風格。解法不是換 seed 或換 LoRA，而是**每一次都重新餵 turnaround sheet 當
+   ground truth**，並逐項比對身分不變量。
+7. **negative prompt 要分流**：開源／自架有真正的 negative 欄位與 CFG；閉源對話式模型**沒有
+   negative 欄位**，排除項要改寫成正面描述（不寫 "no cluttered background"，寫 "clean seamless
+   white studio background"）；Midjourney 走 `--no` 參數。
+8. **記錄模型與版本字串。** 一份沒寫明版本的 prompt package 下一季不可重現，等於沒交付。寫進
+   渲染規格。
+9. **一致性數字是機率，不是保證。** 所以 on-model drift checklist 是**每一張都檢查**，不是抽查
+   ——精細的符號細節正是模型最會漂移的地方。
+
+### Old patterns（版本快照，會過期——引用前務必覆核官方文件）
+
+<details>
+<summary>2026-07 快照：模型選型表（as of 2026-07；型號與排名每季變動）</summary>
+
+生成榜上 GPT Image 2 以明顯差距領先，但**編輯榜前五名落在約 14 Elo 之內，實質並列**
+（[Artificial Analysis 生成榜](https://artificialanalysis.ai/image/leaderboard/text-to-image)、
+[編輯榜](https://artificialanalysis.ai/image/leaderboard/editing)）。所以在成本、參考圖配額、
+API 便利性之間選，而不是照 headline 排名選。
 
 | 工作 | 首選（2026-07） | 為什麼 |
 |------|------------------|--------|
@@ -115,56 +143,46 @@ reference-image quota, and API convenience rather than on a headline rank.
 | 4K 印刷級、多角色同場 | Nano Banana Pro / Nano Banana 2 | 原生 4K + 內建多參考角色鎖定 |
 | 風格化概念稿、世界觀探索 | Midjourney V8.1 | 美感天花板、moodboard 與 `--sref` 穩定 |
 | 商品／包裝上的可讀文字 | Ideogram 4.0 或 GPT Image 2 | 字形與版面正確率高 |
-| 向量母檔候選 | Recraft V4.1 Pro | 目前唯一原生輸出可編輯 SVG（見下） |
+| 向量母檔候選 | Recraft V4.1 Pro | 當時唯一原生輸出可編輯 SVG |
 | 需自架、可控、可自訓 | Qwen-Image / FLUX.2 | 開源權重＋成熟 LoRA 生態 |
 
-Record the chosen model **and its version string** in the 渲染規格 — a package that doesn't
-say which model it was tuned for is not reproducible next quarter.
+</details>
 
-### 角色一致性：2026 的方法優先序與硬數字
+<details>
+<summary>2026-07 快照：參考圖配額、版本相容性與一致性數字（as of 2026-07）</summary>
 
-Identity preservation moved *into* the models; the old adapter stack is now the fallback,
-not the first move. Try in this order:
+**Gemini／Nano Banana 分槽配額**（[Gemini API docs](https://ai.google.dev/gemini-api/docs/image-generation)，2026-07 覆核）：
 
-1. **模型內建多參考**（第一線）。**參考圖在 2026 已經「分槽」**——問題不是「丟幾張」，而是
-   「哪張圖放哪個槽」。官方配額（[Gemini API
-   docs](https://ai.google.dev/gemini-api/docs/image-generation)，2026-07 覆核）：
+| 模型 ID | object | character | style |
+|---------|--------|-----------|-------|
+| `gemini-3-pro-image`（NB Pro） | 6 | **5** | 3 |
+| `gemini-3.1-flash-image`（NB2） | 10 | **4** | — |
+| `gemini-3.1-flash-lite-image` | 14 | **無 character 槽** | — |
 
-   | 模型 ID | object | character | style |
-   |---------|--------|-----------|-------|
-   | `gemini-3-pro-image`（NB Pro） | 6 | **5** | 3 |
-   | `gemini-3.1-flash-image`（NB2） | 10 | **4** | — |
-   | `gemini-3.1-flash-lite-image` | 14 | **無 character 槽** | — |
+lite 版沒有角色槽，不要拿來做 IP 一致性工作；`gemini-2.5-flash-image` 為 legacy，應遷移。
 
-   turnaround sheet 放 **character 槽**、道具與場景參考放 object 槽。lite 版沒有角色槽，
-   不要拿來做 IP 一致性工作。`gemini-2.5-flash-image` 為 legacy，應遷移。
-2. **Midjourney `--oref <turnaround URL>` + `--ow`**（風格化 IP）。
-   **⚠️ 引用任何 Midjourney 教學前先讀這一段**：官方文件寫明 Omni Reference「compatible with
-   Midjourney version 7」，**V8 線（V8.2 為 2026-07 預設）沒有角色參考功能**——附上 `--oref`
-   會讓該 prompt **自動改跑 V7**；`--cref`/`--cw` 則只在 v6/niji 6。所以角色工作必須**顯式
-   pin `--v 7`** 並接受 V7 世代的美感，`--oref` 也**一次只吃一張參考圖**，且與 draft/fast
-   模式、inpainting 互斥。`--ow` 範圍 1–1000、**預設 100**，鎖角色往上調但留意過高會連風格
-   一起鎖死。想用 V8.1/8.2 的美感時，只用 `--sref` 做**風格**參考，角色仍由人重畫。
-   網路上絕大多數教學仍在描述舊行為，這是本 lane 最常見的坑。
-   （[Omni Reference](https://docs.midjourney.com/hc/en-us/articles/36285124473997)、
-   [Version](https://docs.midjourney.com/hc/en-us/articles/32199405667853-Version)）
-3. **角色 LoRA**（量產或需要無限姿勢自由度時）。訓練集 20–40 張，**其中至少 6–8 張是非正面
-   角度**；caption everything EXCEPT the character — the trigger word is the thing you don't
-   caption.
-4. **IPAdapter / InstantID / ControlNet**：降級為開源自架管線的選項，不再是預設建議。
+**⚠️ Midjourney 版本相容性**（引用任何 Midjourney 教學前先讀這段）：官方文件寫明 Omni
+Reference「compatible with Midjourney version 7」，**V8 線（V8.2 為 2026-07 預設）沒有角色參考
+功能**——附上 `--oref` 會讓該 prompt **自動改跑 V7**；`--cref`/`--cw` 則只在 v6/niji 6。角色工作
+必須**顯式 pin `--v 7`**；`--oref` 一次只吃一張參考圖，且與 draft/fast 模式、inpainting 互斥。
+`--ow` 範圍 1–1000、**預設 100**。想用 V8.1/8.2 的美感時只用 `--sref` 做風格參考，角色仍由人
+重畫。網路上絕大多數教學仍在描述舊行為，這是本 lane 最常見的坑。
+（[Omni Reference](https://docs.midjourney.com/hc/en-us/articles/36285124473997)、
+[Version](https://docs.midjourney.com/hc/en-us/articles/32199405667853-Version)）
 
-**期望值要誠實**：pure-prompt 一致性約 65–75%，加角色 LoRA 約 85–92%，而**跨風格只有
-75–85%**（[Apatero turnaround
-指南](https://apatero.com/blog/ai-character-turnaround-sheet-generation-guide-2026)、
+**角色 LoRA 訓練集**：20–40 張，**其中至少 6–8 張是非正面角度**；caption everything EXCEPT the
+character — the trigger word is the thing you don't caption.
+
+**一致性期望值**：pure-prompt 約 65–75%，加角色 LoRA 約 85–92%，**跨風格僅 75–85%**
+（[Apatero turnaround 指南](https://apatero.com/blog/ai-character-turnaround-sheet-generation-guide-2026)、
 [Nowadais](https://www.nowadais.com/ai-character-consistency-guide-consistent-visual/)）。
+實測差異也真實存在：GPT Image 2 在雙參考身分轉移拿 5/5，Nano Banana 2 只有 3/5，臉部保真會往
+插畫風漂移（[Vidguru 10 項盲測](https://www.vidguru.ai/blog/nano-banana-2-vs-gpt-image-2-comparison.html)）。
 
-**跨風格衰減警語（本 pipeline 特別容易踩）**：平面向量 → 3D 玩具渲染 → 絨毛材質屬於跨風格
-轉換，衰減最嚴重的一段。做法不是換 seed 或換 LoRA，而是**每一次都重新餵 turnaround sheet 當
-ground truth**，並逐項比對身分不變量（見 checklist）。
+**通用排除清單**（依風格調整）：off-model、inconsistent colors、different character、
+extra limbs、realistic。
 
-**turnaround sheet 是 Lane 3 的第一個產出物，不是選配**：一次生成四格拼版（front / 3-4 /
-side / back，A-pose、白底、正交、無投影、每視角 ≥2048 px），因為它同時是後續多參考輸入、
-LoRA 訓練集、以及 3D／打樣的參考來源。分四次生成必然對不齊。
+</details>
 
 ### 系列 prompt 架構：fixed / variable 雙區塊
 
@@ -187,27 +205,20 @@ FIXED 兩段逐字複製到每一款的 prompt，只換 VARIABLE。潮玩品類�
 JSON schema 形式的 prompt 也可以，但要誠實看待它的價值：**它讓 prompt 可版控、可被團隊複用**，
 沒有證據顯示模型端會因此畫得更好。最終仍轉成自然語言送出。
 
-### Negative prompt 的正確用法（2026 已分流）
-
-一句「加 negative prompt」在 2026 已經是錯的，因為三類工具的機制不同：
-
-- **開源／自架**（SD、FLUX、Qwen-Image）：有真正的 negative 欄位與 CFG，照舊有效。
-- **閉源對話式**（GPT Image 2、Nano Banana 系列）：**沒有 negative 欄位**。排除項要寫進正向
-  敘述，而且「不要出現 X」有時反而召喚 X ——**改成正面描述替代物**：不寫 "no cluttered
-  background"，寫 "clean seamless white studio background"。
-- **Midjourney**：用 `--no` 參數。
-
-仍然通用的排除清單（依風格調整）：off-model、inconsistent colors、different character、
-extra limbs、realistic。
-
 ### 外部向量生成（Recraft 路線）與 SVG 母檔的關係
 
 本 pipeline 的 identity master 是**手工撰寫的 SVG**，這一點不變——因為母檔要能被逐段控制、
-diff、與驗證。但 2026 起多了一條可用的外部路徑：Recraft V4 / V4.1 Pro 會**原生輸出具名圖層、
-乾淨錨點、可編輯填色的 SVG**（直接以 path 構圖，不是把點陣圖 auto-trace），Pro 版
-2048×2048，檔案約 24–144 KB（[Recraft
+diff、與驗證。但外部**原生向量生成**（非點陣 auto-trace）已成為一條可用的草稿路徑。
+
+<details>
+<summary>2026-07 快照：Recraft 的具體型號與輸出規格（as of 2026-07）</summary>
+
+Recraft V4 / V4.1 Pro 原生輸出具名圖層、乾淨錨點、可編輯填色的 SVG（直接以 path 構圖），
+Pro 版 2048×2048，檔案約 24–144 KB（[Recraft
 docs](https://www.recraft.ai/docs/recraft-models/recraft-V4)、[Ropewalk 實測
 指南](https://ropewalk.ai/blog/recraft-v4-pro-svg-guide-2026)）。
+
+</details>
 
 - **取得向量的三條路，品質分明**：(a) 原生 path 生成（可用作草稿基礎）＞(b) 點陣後
   auto-trace（節點髒、不可維護，**僅限救急**）＞(c) 純手繪（母檔仍走這條）。
@@ -227,11 +238,9 @@ docs](https://www.recraft.ai/docs/recraft-models/recraft-V4)、[Ropewalk 實測
 每一張生成圖都對照 flat master 逐項打勾：silhouette 是否吻合？部位色票 hex 是否正確？超級
 符號是否存在且未被改動？頭身比是否正確？眼型與髮際線／標誌性配件是否一致？
 
-誠實的警告：**精細的符號細節正是模型最會漂移的地方**。identity-preservation 一代（Nano
-Banana / GPT Image 2 級）縮小了差距但沒有消除——實測中 GPT Image 2 在雙參考身分轉移拿 5/5，
-Nano Banana 2 只有 3/5，臉部保真會往插畫風漂移（[Vidguru 10 項盲
-測](https://www.vidguru.ai/blog/nano-banana-2-vs-gpt-image-2-comparison.html)）。所以是
-每一張都檢查，不是抽查。
+誠實的警告：**精細的符號細節正是模型最會漂移的地方**。identity-preservation 世代縮小了差距但
+沒有消除，而且**各家模型的保真程度差距真實存在**（同期實測數字見上方版本快照）。所以是每一張
+都檢查，不是抽查。
 
 ### Provenance log（確權用，不是選配）
 

@@ -6,6 +6,27 @@ All notable changes to this project are documented here. Format follows
 ## [Unreleased]
 
 ### Added
+- `references/commercialization.md` — 新章節**「熱度退潮之後：IP 生命週期管理」**。原本的
+  稀缺性管理只處理「供給」，這一節補上「需求的品質」：POP MART 於 2026-05-13 首次季度電話會
+  自承海外高增長來自流量紅利、**新用戶缺乏潮玩文化認知，退潮後業績明顯回落**，並停止把開店數
+  當 KPI；對照組是三麗鷗 FY2026/3 營業利益 **+50.3%**、牽引角色全是四十年老角色。由此導出
+  「**爆發力工程 vs 複利工程**」對照表（目標／槓桿／風險／指標各不相同），並要求 roadmap 第
+  12 個月之後改用右欄語言。另補上新角色命中率的誠實數字（POP MART 年度新 IP 由 29 → 57 個；
+  星星人一年 RMB 3.9 億 vs Supertutu 首發約 900 件）。
+- `references/commercialization.md`「隨機機制合規關卡」升級為**多法域版**：新增歐洲側的
+  **PEGI 2026-06 互動風險分級**（販售付費隨機物品的遊戲一律至少 PEGI 16）與 **EU Digital
+  Fairness Act**（提案指向 2026 Q4、預計 2027 通過）作為實體盲盒的外溢風險；中消協 2026-05-21
+  公布的盲盒投訴**平均涉訴金額 RMB 4,427 元**；以及**卡游 IPO 案**——淨利率 44.4% 的公司因
+  未成年人保護與盲盒合規補件而卡在證監會備案。合規因此被明確定位為**產品定義階段**的工作，
+  不是上市前的善後。
+- `KPI sheet` 新增**留存／認知指標**（回購率、UGC 數、互動率），要求與銷售數字成對檢查——
+  銷售衝高而留存沒動，代表買到的是圍觀者而不是用戶。
+- `references/market-research.md` — 新增**台灣／華語市場錨點**小節。華語圈量體錨在對岸
+  （谷子經濟 2026 預估 > RMB 2,200 億；TOP TOY 收入 +87.9% 但淨利 −65.6%），並明確警告
+  **台灣沒有可對應等級的官方市場規模統計**，要求報告改用文策院文博會的媒合成果（2025 年促成
+  24 案、NT$4,850 萬）並直接標註資料缺口；另收錄 2026 文博會角色 IP 論壇的命題「IP 不是可愛
+  就好——通路如何評估一個 IP 的商業可行性」，對應本 pipeline 的 rollout ladder，以及韓國
+  「從角色授權擴張為內容 IP」的對照框架。
 - `.claude-plugin/marketplace.json` 與 `.claude-plugin/plugin.json` — 本 repo 現在**同時是一個
   Claude Code plugin marketplace**，可用兩行指令安裝，不必手動搬檔案或知道 skills 目錄在哪：
 

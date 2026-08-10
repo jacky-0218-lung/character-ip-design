@@ -1,5 +1,5 @@
 ---
-name: character-ip-design
+name: designing-character-ips
 description: >-
   Full character-IP development pipeline — market research first, then worldbuilding and a
   character depth profile, then design (Super Symbol 超級符號 method: 3 concept directions, a
@@ -59,6 +59,33 @@ before the brief exists — an unbriefed character is a generic character.
   Phase 3 (usage don'ts + light extension notes), full Phase 2 always.
 - When unsure, ask in intake. Never inflict a 40-page bible on a coffee shop; never ship a
   naked drawing to someone building a business.
+
+## Pipeline checklist（開工前先複製這張表，每完成一步就打勾）
+
+Copy this checklist into your working notes and tick items as you go. ⊕ 步驟只在 full IP
+brief 跑；quick-mascot brief 依上方 scope ladder 壓縮或略過。
+
+```text
+Phase 1 研究與策略
+- [ ] S1  Intake — brief 已取得（表單或一輪批次提問），scope ladder 已判定
+- [ ] S2  市場調查 — 競品佔位表 + 空白定位一句話（⊕ 完整報告；快速吉祥物併入定位摘要）
+- [ ] S3  敘事教義 + 世界觀 1 頁 + 角色深度設定（含唯一的反差來源）
+Phase 2 設計
+- [ ] S4  三個概念方向（不同 motif 且不同身體構成）→ 已選定
+- [ ] S5  風格三聯圖（三種不同語域）→ 風格已鎖定，之後不再換
+- [ ] S6  放大軸擇一（五官／形態／色彩）
+- [ ] S7  視覺減法（never-delete floor 已確認）
+- [ ] S8  超級符號一句話＋幾何 + 唯一一個反差
+- [ ] S9  Hero 繪製 + 魅力檢核（色彩 4 角色／一處不對稱／細節 ≤ 4 項）
+- [ ] S10 三項驗證，每項附圖與判定（失敗 → 修訂 → 附 before/after）
+Phase 3 商業化與交付
+- [ ] S11 延展組（表情／姿勢／情境圖）+ 各平台輸出 +（若 intake 要求）精緻渲染 lane
+- [ ] S12 ⊕ 系列規劃／rollout roadmap（各階 gate）／內容支柱／KPI／商品化檢核／golden record
+- [ ] S13 確權與合規（⊕，或任何用過 AI 生圖的案子一律必做）
+- [ ] 交付 IP bible（HTML）+ SVG 母檔；marginal 的驗證結果在對話訊息裡主動講
+```
+
+S9 在完整 brief 上永遠不能早於 S1–S3——「畫得比想得快」是這條產線最常見的失敗。
 
 ---
 

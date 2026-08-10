@@ -2,7 +2,7 @@
   "name": "ai-generated-character-rights",
   "query": "我用 AI 生了一個吉祥物,想拿去做週邊和註冊商標,版權上要注意什麼?",
   "should_trigger": true,
-  "skills": ["character-ip-design"],
+  "skills": ["designing-character-ips"],
   "expected_behavior": [
     "讀取 references/ip-protection.md,而不是憑印象回答法律問題",
     "說清楚結構:著作權在多數法域是弱腿(AI 生成物的人類作者要件),商標才是承重牆(商標法無作者要件)",

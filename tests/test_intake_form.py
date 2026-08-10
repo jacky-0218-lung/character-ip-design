@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FORM = ROOT / "skills" / "character-ip-design" / "assets" / "intake-form.html"
+FORM = ROOT / "skills" / "designing-character-ips" / "assets" / "intake-form.html"
 
 
 class TestIntakeForm(unittest.TestCase):
@@ -37,7 +37,7 @@ class TestIntakeForm(unittest.TestCase):
 
     def test_generates_brief(self):
         self.assertIn("需求摘要", self.html)
-        self.assertIn("character-ip-design skill", self.html)
+        self.assertIn("designing-character-ips skill", self.html)
         self.assertIn("function build", self.html)
 
 

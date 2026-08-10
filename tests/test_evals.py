@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCENARIOS = ROOT / "evals" / "scenarios"
-SKILL_NAME = "character-ip-design"
+SKILL_NAME = "designing-character-ips"
 
 
 def load_scenarios() -> list[tuple[Path, dict]]:

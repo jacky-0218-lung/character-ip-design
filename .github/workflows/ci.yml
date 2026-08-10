@@ -23,5 +23,7 @@ jobs:
         run: python3 -m unittest discover -s tests -v
       - name: Compile all Python
         run: python3 -m compileall -q tools tests
+      - name: Eval harness smoke test
+        run: python3 tools/run_evals.py list
       - name: Bundle digest (informational)
-        run: python3 tools/skill_bundle.py digest skills/character-ip-design
+        run: python3 tools/skill_bundle.py digest skills/designing-character-ips

@@ -5,7 +5,56 @@ All notable changes to this project are documented here. Format follows
 
 ## [Unreleased]
 
+### ⚠️ Breaking（僅影響手動安裝，且尚未 release）
+- **skill 更名：`character-ip-design` → `designing-character-ips`**，目錄同步改名為
+  `skills/designing-character-ips/`。依 Anthropic 官方
+  [Skill authoring best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
+  的 name 命名建議（動名詞形，如 `processing-pdfs`／`analyzing-spreadsheets`），並保留
+  「design」這個觸發字——name 與 description 是唯一預載的兩個欄位，name 多帶一個高頻觸發詞
+  是白拿的。趁 0.1.2 尚未發布處理，晚一版成本只會更高。
+  - **plugin／marketplace 名稱刻意維持 `character-ip-design`**，所以
+    `/plugin marketplace add`、`/plugin install character-ip-design@character-ip-design`、
+    `/plugin update`、`/plugin uninstall` **全部不變**；plugin 安裝者無感。
+  - 受影響的只有**安裝方式 B（手動搬子目錄）**：來源路徑改為
+    `skills/designing-character-ips`，安裝目的地建議一併改名。
+  - 未更動：repo 名稱、`pyproject.toml` 的專案名、`skill_bundle.py` 的
+    `character-ip-design-bundle-v1` 演算法識別字串（那是**格式版本識別字**，不是 skill 身分；
+    改了會使 v0.1.0／v0.1.1 已發出的 receipt 無法比對）。
+- `tools/check_repository.py` — 上述更名暴露了一個**原本靜默失效的守門**：plugin/skill 的
+  版本漂移檢查是用 `skills/<plugin name>/SKILL.md` 定位的，一旦兩個名稱分家，該路徑找不到
+  檔案就**整條檢查悄悄跳過**（測試會炸，守門卻回報 ok）。改為新的 `resolve_version_anchor()`：
+  先精確比對名稱，找不到則退回 `skills/` 內唯一的 skill，**若有多個 skill 且都不匹配就報錯**
+  ——沉默地停用一項檢查，正是過期版本號流到使用者手上的典型路徑。附 4 項新測試。
+
 ### Added
+- `tools/run_evals.py` — **行為評測 harness**。模型呼叫本身仍需人工（repo 刻意不帶網路呼叫、
+  API key 或廠商 SDK），但**其餘每一步都已工具化**，所以「跑 evals」現在是一條指令而不是一段
+  散文：
+  - `list` 列出情境與觸發預期；
+  - `pack` 產生 `evals/runs/<model>/<情境>.md` 執行單（可直接貼的 query ＋ 打勾清單）與
+    `results-<model>.json` 範本，**已填好的 results 檔不會被覆蓋**；
+  - `score` 對照情境計分，三種失敗模式（漏跑／觸發結果不符／expected_behavior 未達成或未記錄）
+    任一發生即以非零狀態結束。
+  依官方建議預設涵蓋 **haiku／sonnet／opus** 三個模型——小模型往往需要更明確的指示，
+  Opus 能從精簡指令推出的東西 Haiku 可能需要寫白。搭配 `tests/test_run_evals.py` 的 14 項測試
+  與 CI 的冒煙步驟；`evals/runs/` 已列入 `.gitignore`。
+- `SKILL.md` — **Pipeline checklist（執行檢核表）**：一張可直接複製到工作筆記的 13 步打勾清單，
+  標出哪些步驟只在 full IP brief 跑。依 Anthropic 官方
+  [Skill authoring best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
+  的「Use Workflows for Complex Tasks — 多步驟流程要給可複製的 checklist」與「Implement
+  Feedback Loops」兩條建議。這條產線有 13 個步驟又有 scope ladder 分支，最常見的失敗不是做錯
+  而是**漏做**（跳過三項驗證、忘記 Step 13 確權、full brief 卻沒出 roadmap）；把狀態外顯成
+  checklist 是官方明列、成本最低的修法。SKILL.md 仍為 289 行，遠低於 500 行上限。
+- `references/market-research.md` §2 — 競品佔位表新增**第四個佔位維度：場景**（輕場景／重場景
+  兩層讀法），並要求**掃描範圍跨出品類**：2026 上半年與潮玩爭同一批貨架的已包含茶飲（蜜雪
+  冰城）與遊戲 IP（王者榮耀、英雄聯盟），且中國市場**本土 IP 上榜次數約為海外 IP 的三倍**
+  （YOYO 75 次、兔閃閃 ShyShy 58 次）。只掃同品類會系統性低估競爭密度。
+- `references/commercialization.md` — Rollout ladder 每一階新增 `場景：___` 欄位與**輕/重場景
+  對照表**，並要求與 market-research §2 的場景欄位一致。產業共識已從「誰有新 IP」移到**場景
+  爭奪**：奧飛以小顆粒矩陣逐一對應場景（疊疊樂＝桌面，銷量破 8,000 萬只；粒粒＝陪伴、咔咔＝
+  解壓、扣扣＝穿戴），POP MART 則投向樂園／門店／電影等重場景。獨立創作者不碰重場景，但必須
+  能一句話回答「這個角色平常出現在使用者的哪裡」。
+
 - `.claude-plugin/marketplace.json` 與 `.claude-plugin/plugin.json` — 本 repo 現在**同時是一個
   Claude Code plugin marketplace**，可用兩行指令安裝，不必手動搬檔案或知道 skills 目錄在哪：
 
@@ -59,6 +108,27 @@ All notable changes to this project are documented here. Format follows
 - `output-spec.md` — IP bible 結構新增 ⊕「確權與合規」章節。
 
 ### Changed
+- `references/rendering.md` Lane 3 — 依官方 anti-pattern「**Avoid time-sensitive
+  information**」重構為官方建議的 **"Old patterns" 結構**：把不會過期的部分抽成
+  **「模型選型與角色一致性：跨版本原則」9 條**（依工作分派選型且看編輯榜、參考圖是分槽的、
+  identity block 每次重複注入、turnaround sheet 是第一個產出物、一致性方法優先序、跨風格衰減、
+  negative prompt 分流、必記版本字串、一致性是機率不是保證），會過期的型號表／Gemini 分槽配額／
+  Midjourney V7-V8 相容性／LoRA 訓練集數字／一致性百分比則收進標註
+  「2026-07 快照（as of 2026-07）」的 `<details>` 區塊。**內容零損失**——agent 讀的是原始
+  Markdown，`<details>` 內容一樣看得到；改變的是**過期時一眼可辨、可整塊替換**。
+  另刪去因重構而重複的 Negative prompt 章節，Recraft 的型號與輸出規格同樣收進快照區塊。
+- `references/commercialization.md` — 新增**高收藏品類（BJD）這條岔路**：2026 年 BJD 由小眾
+  轉大眾，日本市場光素體即達千元級並形成妝面／服裝／假髮／攝影的完整生態鏈。附與盲盒的
+  **五項對照表**（獲利來源／稀缺性／客單價／對設計的要求／合規風險）——兩者是相反的商業模型，
+  選錯會全盤皆錯。並把判斷點前推到 Phase 2：BJD 路線要求**超級符號落在不可拆的部位**
+  （頭型／臉部編碼／耳形），且在 Step 6 應優先考慮形態軸或五官軸而**避免色彩軸**，因為換色
+  換裝正是該品類的賣點。
+- `references/market-research.md` 潮玩週期段補上**收尾（2026 上半年）**：POP MART 王寧於
+  2026-03-25 法說把今年定調為「F1 進站休整」、明講不追求「增收不增利」並下修營收增速目標；
+  新品「復古理髮店」上市即破發，原定 7 月的上海 PTS 潮玩嘉年華取消；同期 TNTSPACE／黑玩／
+  AYOR TOYS 等新勢力完成融資。判讀寫成一句可教的話：**這是品類的週期修正，不是品類的死亡**
+  ——熱期靠供給換來的營收會在冷期原數還回去，活下來靠換賽道（場景、BJD 等高收藏品類）與換
+  節奏，不是加大產能。
 - `references/rendering.md` Lane 3 模型段整段重寫為 2026-07 的實測樣貌：改為「依工作分派」
   的選型表（並點出**編輯榜才是 IP 工作的關鍵榜，前五名實質並列**）、角色一致性的新優先序
   （模型內建多參考 → Midjourney `--oref` → LoRA → IPAdapter/InstantID 降級為自架選項）、

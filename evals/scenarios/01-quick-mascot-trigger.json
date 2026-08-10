@@ -2,7 +2,7 @@
   "name": "quick-mascot-trigger",
   "query": "幫我設計一個咖啡店的吉祥物",
   "should_trigger": true,
-  "skills": ["character-ip-design"],
+  "skills": ["designing-character-ips"],
   "expected_behavior": [
     "先呈現初始化表單(intake),在有 brief 之前不直接開始畫",
     "辨識為 quick-mascot brief:壓縮 Phase 1(競品/撞名快掃併入定位摘要)與 Phase 3,保留完整 Phase 2",
